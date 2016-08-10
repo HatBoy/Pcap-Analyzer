@@ -1,1 +1,63 @@
 # Pcap-Analyzer
+
+##主要功能
++ 1.展示数据包基本信息
++ 2.分析数据包协议
++ 3.分析数据包流量
++ 4.绘制出访问IP经纬度地图
++ 5.提取数据包中特定协议的会话连接（WEB，FTP，Telnet）
++ 6.提取会话中的敏感数据（密码）
++ 7.简单的分析数据包中的安全风险（WEB攻击，暴力破解）
++ 8.提取数据报中的特定协议的传输文件或者所有的二进制文件
+
+##安装部署过程:
+
+运行环境：Python 2.7.X
+操作系统：Linux (以Ubuntu 15.10为例)
+
+###1.Python相关环境配置（Ubuntu默认安装Python2.7不需要额外安装Python）
+Python包管理器安装：sudo apt-get install python-setuptools python-pip
+
+###2.相关第三方依赖库安装：
++ sudo apt-get install tcpdump graphviz imagemagick python-gnuplot python-crypto python-pyx
++ sudo pip install scapy
++ sudo pip install Flask
++ sudo pip install Flask-WTF
+
+###3.修改配置文件
+注意修改config.py配置文件中的目录位置
++ UPLOAD_FOLDER = '/home/dj/PCAP/'     上传的PCAP文件保存的位置
++ FILE_FOLDER = '/home/dj/Files/'      提取文件时保存的位置，下面必须要用All、FTP、Mail、Web子目录，用于存放提取不同协议的文件
++ PDF_FOLDER = '/home/dj/Files/PDF/'   PCAP保存为PDF时保存的位置
+
+###4.服务器安装
+Gunicorn服务器：pip install gunicorn
+Nginx服务器：sudo apt-get install nginx
+Nginx配置：修改/etc/nginx/nginx.conf文件，在http{}中添加下面代码：
+```
+server { 
+listen 81; 
+server_name localhost; 
+access_log /var/log/nginx/access.log; 
+error_log /var/log/nginx/error.log;
+
+     location / {
+        #root   html;
+        #index  index.html index.htm;
+         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+         proxy_set_header Host $http_host;
+         proxy_pass http://127.0.0.1:8000;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   html;
+    }
+```
+
+###5.启动系统：
+进入系统所在目录：../pcap-analyzer
+通过Gunicorn服务器服务器启动系统，运行命令：gunicorn -c deploy_config.py run:app
+此时只能本地访问系统，地址：http://127.0.0.1:8000
+启动Nginx服务器：sudo service nginx start
+此时其他主机也可访问该系统，地址：http://服务器IP:81
