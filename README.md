@@ -11,7 +11,29 @@
 + 8.提取数据报中的特定协议的传输文件或者所有的二进制文件
 
 ##效果展示
+首页：
 ![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/index.png)
+
+基本数据展示：
+![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/basedata.png)
+
+协议分析：
+![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/protoanalyxer.png)
+
+流量分析：
+![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/flowanalyzer.png)
+
+访问IP经纬度地图：
+![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/ipmap.png)
+
+会话提取：
+![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/getdata.png)
+
+攻击信息警告：
+![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/attackinfo.png)
+
+文件提取：
+![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/getfiles.png)
 
 ##安装部署过程:
 
