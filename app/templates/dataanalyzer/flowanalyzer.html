@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>流量分析</title>
+
+    <link href="../../static/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../static/bootstrap-3.3.5/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+
+    <script src="../../static/bootstrap-3.3.5/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../../static/bootstrap-3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+
+</head>
+<body>
+<br>
+<br><!--时间流量图-->
+<div class="container" style="height: 400px; width: 90%">
+    <div id="time_flow" style="height: 400px;width: 75%;float:left;"></div>
+    <div id="flow_in_out" style="height: 400px;width: 25%;float:left;"></div>
+</div>
+<br><!--协议流量图-->
+<div class="container" style="height: 400px; width: 90%">
+    <div id="proto_flow_pie" style="height: 400px;width: 25%;float:left;"></div>
+    <div id="proto_flow_bar" style="height: 400px;width: 50%;float:left;"></div>
+    <div id="proto_flow_count" style="height: 400px;width: 25%;float:left;"></div>
+</div>
+<br><!--流入流出ip数据包个数-->
+<div class="container" style="height: 400px; width: 90%">
+    <div id="data_in_packet" style="height: 400px;width: 50%;float:left;"></div>
+    <div id="data_out_packet" style="height: 400px;width: 50%;float:left;"></div>
+</div>
+<br><!--流入流出ip流量-->
+<div class="container" style="height: 400px; width: 90%">
+    <div id="data_in_len" style="height: 400px;width: 50%;float:left;"></div>
+    <div id="data_out_len" style="height: 400px;width: 50%;float:left;"></div>
+</div>
+{% autoescape false %}
+    <!-- ECharts单文件引入 -->
+    <script src="../../static/echarts-2.27/build/dist/echarts.js" type="text/javascript"></script>
+    <!--时间流量曲线图-->
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('time_flow'));
+
+                var option = {
+                    title : {
+                        text: '时间流量图',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    calculable : false,
+                    xAxis : [
+                        {
+                            type : 'category',
+                            name : '相对时间',
+                            boundaryGap : true,
+                            data : {{ time_flow.keys() }}
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            name : '数据包字节',
+                            axisLabel : {
+                                formatter: '{value} byte'
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'数据包字节',
+                            type:'line',
+                            smooth:true,
+                            symbol: 'none',
+                            itemStyle:{
+                                normal:{
+                                    label:{show:true},
+                                    color:'#6495ed', //图例颜色设置
+                                    },
+                                emphasis:{label:{show:true}}
+                                    },
+                            data:{{ time_flow.values() }}
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+
+<!--流入流出饼状图-->
+<script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/pie' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('flow_in_out'));
+
+                var option = {
+                    title : {
+                        text: '数据流入流出统计',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient : 'vertidata_in_lencal',
+                        x : 'left',
+                        data:['流入','流出']
+                    },
+                    calculable : false,
+                    series : [
+                        {
+                            name:'数据流入流出',
+                            type:'pie',
+                            radius : '60%',
+                            center: ['50%', '50%'],
+                            data:[
+                                {value:{{ data_flow['IN'] }}, name:'流入'},
+                                {value:{{ data_flow['OUT'] }}, name:'流出'}
+                            ]
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+
+ <!--常见协议统计条形图-->
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('proto_flow_bar'));
+
+                var option = {
+                    title : {
+                        text: '常见协议流量统计',
+                        x:'center'
+                    },
+                    tooltip: {
+                        show: true
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'category',
+                            name : '协议类型',
+                            boundaryGap : true,
+                            data : ["IP","IPv6","TCP","UDP","ARP","ICMP","DNS","HTTP","HTTPS","Others"]
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            name : '协议数据包总流量'
+                        }
+                    ],
+                    series : [
+                        {
+                            "name":"协议数据包总流量",
+                            "type":"bar",
+                            itemStyle:{
+                                normal:{
+                                    label:{show:true},
+                                    color:'#87cefa' //图例颜色设置
+                                    },
+                                emphasis:{label:{show:true}}
+                                    },
+                            "data":{{ proto_flow }}
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+<!--常见协议流量长度饼状图-->
+<script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/pie' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('proto_flow_pie'));
+
+                var option = {
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient : 'horizontal',
+                        x : 'left',
+                        data:["IP","IPv6","TCP","UDP","ARP","ICMP","DNS","HTTP","HTTPS","Others"]
+                    },
+                    calculable : false,
+                    series : [
+                        {
+                            name:'协议数据包总流量',
+                            type:'pie',
+                            radius : '60%',
+                            center: ['50%', '50%'],
+                            data:[
+                                {value:{{ proto_flow[0] }}, name:'IP'},
+                                {value:{{ proto_flow[1] }}, name:'IPv6'},
+                                {value:{{ proto_flow[2] }}, name:'TCP'},
+                                {value:{{ proto_flow[3] }}, name:'UDP'},
+                                {value:{{ proto_flow[4] }}, name:'ARP'},
+                                {value:{{ proto_flow[5] }}, name:'ICMP'},
+                                {value:{{ proto_flow[6] }}, name:'DNS'},
+                                {value:{{ proto_flow[7] }}, name:'HTTP'},
+                                {value:{{ proto_flow[8] }}, name:'HTTPS'},
+                                {value:{{ proto_flow[9] }}, name:'Others'}
+                            ]
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+
+<!--流量最多协议统计饼状图-->
+<script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/pie' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('proto_flow_count'));
+
+                var option = {
+                    title : {
+                        text: '流量最多协议统计',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} KB"
+                    },
+                    legend: {
+                        orient : 'vertical',
+                        x : 'left',
+                        data:{{ most_flow_key }}
+                    },
+                    calculable : false,
+                    series : [
+                        {
+                            name:'协议数据包总流量',
+                            type:'pie',
+                            radius : '60%',
+                            center: ['50%', '50%'],
+                            data:[
+                                {% for key, value in most_flow_dict %}
+                                    {value:{{ value }}, name:'{{ key }}'},
+                                {% endfor %}
+                            ]
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+
+<!--流入IP数据包个数图-->
+<script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('data_in_packet'));
+
+                var option = {
+                    title : {
+                        text: '流入IP流量数据包个数图',
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'value',
+                            name : '数据包个数'
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'category',
+                            name : '流入IP',
+                            data : {{ ip_flow['in_keyp'] }}
+                        }
+                    ],
+                     grid: { // 控制图的大小，调整下面这些值就可以
+                          x: 100,
+                     },
+                    series : [
+                        {
+                            name:'数据包个数',
+                            type:'bar',
+                            itemStyle:{
+                                normal:{
+                                    label:{show:true},
+                                    color:'#6495ed' //图例颜色设置
+                                    },
+                                emphasis:{label:{show:true}}
+                                    },
+                            data:{{ ip_flow['in_packet'] }}
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+
+<!--流出IP数据包个数图-->
+<script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('data_out_packet'));
+
+                var option = {
+                    title : {
+                        text: '流出IP流量数据包个数图',
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'value',
+                            name : '数据包个数'
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'category',
+                            name : '流出IP',
+                            data : {{ ip_flow['out_keyp'] }}
+                        }
+                    ],
+                     grid: { // 控制图的大小，调整下面这些值就可以
+                          x: 100,
+                     },
+                    series : [
+                        {
+                            name:'数据包个数',
+                            type:'bar',
+                            itemStyle:{
+                                normal:{
+                                    label:{show:true},
+                                    color:'#ff7f50' //图例颜色设置
+                                    },
+                                emphasis:{label:{show:true}}
+                                    },
+                            data:{{ ip_flow['out_packet'] }}
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+
+<!--流入IP流量图-->
+<script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('data_in_len'));
+
+                var option = {
+                    title : {
+                        text: '流入IP总流量图',
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'value',
+                            name : '数据包总流量'
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'category',
+                            name : '流入IP',
+                            data : {{ ip_flow['in_keyl'] }}
+                        }
+                    ],
+                     grid: { // 控制图的大小，调整下面这些值就可以
+                          x: 100,
+                     },
+                    series : [
+                        {
+                            name:'数据包总流量',
+                            type:'bar',
+                            itemStyle:{
+                                normal:{
+                                    label:{show:true},
+                                    color:'#6495ed' //图例颜色设置
+                                    },
+                                emphasis:{label:{show:true}}
+                                    },
+                            data:{{ ip_flow['in_len'] }}
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+
+<!--流出IP流量图-->
+<script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('data_out_len'));
+
+                var option = {
+                    title : {
+                        text: '流出IP总流量图',
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'value',
+                            name : '数据包总流量'
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'category',
+                            name : '流出IP',
+                            data : {{ ip_flow['out_keyl'] }}
+                        }
+                    ],
+                     grid: { // 控制图的大小，调整下面这些值就可以
+                          x: 100,
+                     },
+                    series : [
+                        {
+                            name:'数据包总流量',
+                            type:'bar',
+                            itemStyle:{
+                                normal:{
+                                    label:{show:true},
+                                    color:'#ff7f50' //图例颜色设置
+                                    },
+                                emphasis:{label:{show:true}}
+                                    },
+                            data:{{ ip_flow['out_len'] }}
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+
+{% endautoescape %}
+</body>
+</html>

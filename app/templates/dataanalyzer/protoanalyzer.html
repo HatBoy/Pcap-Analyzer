@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>协议分析</title>
+
+    <link href="../../static/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../static/bootstrap-3.3.5/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+
+    <script src="../../static/bootstrap-3.3.5/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../../static/bootstrap-3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+
+</head>
+<body>
+<br>
+<br><!--常见协议和数据包长度图-->
+<div class="container" style="height: 400px; width: 90%">
+    <div id="pcap_len" style="height:400px; width:25%; float:left;"></div>
+    <div id="proto" style="height:400px; width:50%; float:left;"></div>
+    <div id="pcap_count" style="height:400px; width:25%; float:left;"></div>
+</div>
+<br><!--http协议统计-->
+<div class="container" id="http" style="height: 400px; width: 90%"></div>
+<br><!--DNS协议统计-->
+<div class="container" id="dns" style="height: 400px; width: 90%"></div>
+{% autoescape false %}
+    <!-- ECharts单文件引入 -->
+    <script src="../../static/echarts-2.27/build/dist/echarts.js" type="text/javascript"></script>
+    <!--协议统计条形图-->
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('proto'));
+
+                var option = {
+                    title : {
+                        text: '常见协议统计',
+                        x:'center'
+                    },
+                    tooltip: {
+                        show: true
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'category',
+                            name : '协议类型',
+                            boundaryGap : true,
+                            data : ["IP","IPv6","TCP","UDP","ARP","ICMP","DNS","HTTP","HTTPS","Others"]
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            name : '数据包个数'
+                        }
+                    ],
+                    series : [
+                        {
+                            "name":"数量",
+                            "type":"bar",
+                            itemStyle:{
+                                normal:{
+                                    label:{show:true},
+                                    color:'#87cefa' //图例颜色设置
+                                    },
+                                emphasis:{label:{show:true}}
+                                    },
+                            "data":{{ data }}
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+<!--数据包长度饼状图-->
+<script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/pie' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('pcap_len'));
+
+                var option = {
+                    title : {
+                        text: '数据包长度统计',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient : 'vertical',
+                        x : 'left',
+                        data:['0-300','301-600','601-900','901-1200','1201-1500']
+                    },
+                    calculable : false,
+                    series : [
+                        {
+                            name:'数据包长度',
+                            type:'pie',
+                            radius : '60%',
+                            center: ['50%', '55%'],
+                            data:[
+                                {value:{{ pcap_len['0-300'] }}, name:'0-300'},
+                                {value:{{ pcap_len['301-600'] }}, name:'301-600'},
+                                {value:{{ pcap_len['601-900'] }}, name:'601-900'},
+                                {value:{{ pcap_len['901-1200'] }}, name:'901-1200'},
+                                {value:{{ pcap_len['1201-1500'] }}, name:'1201-1500'}
+                            ]
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+
+<!--数量最多协议统计饼状图-->
+<script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/pie' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('pcap_count'));
+
+                var option = {
+                    title : {
+                        text: '数量最多协议统计',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient : 'vertical',
+                        x : 'left',
+                        data:{{ pcap_count.keys() }}
+                    },
+                    calculable : false,
+                    series : [
+                        {
+                            name:'协议数量',
+                            type:'pie',
+                            radius : '60%',
+                            center: ['50%', '55%'],
+                            data:[
+                                {% for ptoto, count in pcap_count.items() %}
+                                    {value:{{ count }}, name:'{{ ptoto }}' },
+                                {% endfor %}
+                            ]
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+
+<!--HTTP协议条形图-->
+<script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('http'));
+
+                var option = {
+                    title : {
+                        text: 'HTTP/HTTPS访问统计',
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'value',
+                            name : '数据包个数'
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'category',
+                            name : '访问IP',
+                            data : {{ http_key }}
+                        }
+                    ],
+                     grid: { // 控制图的大小，调整下面这些值就可以
+                          x: 100,
+                     },
+                    series : [
+                        {
+                            name:'数据包个数',
+                            type:'bar',
+                            itemStyle:{
+                                normal:{
+                                    label:{show:true},
+                                    color:'#6495ed' //图例颜色设置
+                                    },
+                                emphasis:{label:{show:true}}
+                                    },
+                            data:{{ http_value }}
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+
+<!--DNS协议条形图-->
+<script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist/'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('dns'));
+
+                var option = {
+                    title : {
+                        text: 'DNS访问统计',
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'value',
+                            name : '数据包个数'
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'category',
+                            name : '请求网址',
+                            data : {{ dns_key }}
+                        }
+                    ],
+                     grid: { // 控制图的大小，调整下面这些值就可以
+                          x: 150,
+                     },
+                    series : [
+                        {
+                            name:'数据包个数',
+                            type:'bar',
+                            itemStyle:{
+                                normal:{
+                                    label:{show:true},
+                                    color:'#6495ed' //图例颜色设置
+                                    },
+                                emphasis:{label:{show:true}}
+                                    },
+                            data:{{ dns_value }}
+                        }
+                    ]
+                };
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+{% endautoescape %}
+</body>
+</html>

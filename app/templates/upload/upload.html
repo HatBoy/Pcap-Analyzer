@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>数据包上传</title>
+
+    <link href="../../static/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../static/bootstrap-3.3.5/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../static/upload/buttons.css" rel="stylesheet" type="text/css"/>
+    <link href="../../static/upload/default.css" rel="stylesheet" type="text/css"/>
+    <link href="../../static/upload/fileinput.min.css" rel="stylesheet" type="text/css"/>
+
+
+</head>
+
+<body>
+<div class="container">
+    <br>
+    <div class="jumbotron">
+        <div class="container">
+            <div style="width: 50%;float:left;">
+            <h1>Pcap Analyzer</h1>
+            <br>
+            <p>欢迎使用Pcap Analyzer轻量级数据包分析系统,本系统仅支持大小小于50M的pcap,cap格式数据包,请上传要分析的数据包进行分析</p>
+            </div>
+            <div id="main" style="height:250px;width: 50%;float:left;"></div>
+        </div>
+    </div>
+    <br>
+
+
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <!-- ECharts单文件引入 -->
+    <script src="../../static/echarts-2.27/build/dist/echarts.js"></script>
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: '../../static/echarts-2.27/build/dist'
+            }
+        });
+
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/wordCloud' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'));
+
+            function createRandomItemStyle() {
+                return {
+                    normal: {
+                        color: 'rgb(' + [
+                            Math.round(Math.random() * 160),
+                            Math.round(Math.random() * 160),
+                            Math.round(Math.random() * 160)
+                        ].join(',') + ')'
+                    }
+                };
+            }
+
+            var option = {
+                tooltip: {
+                    show: false
+                },
+                series: [{
+                    name: 'Protocal',
+                    type: 'wordCloud',
+                    size: ['100%', '100%'],
+                    textRotation : [0, 45, 90, -45],
+                    textPadding: 0,
+                    autoSize: {
+                        enable: true,
+                        minSize: 14
+                    },
+                    data: [
+                        {
+                            name: "IP",
+                            value: 6181,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "IPv6",
+                            value: 965,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "TCP",
+                            value: 6181,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "UDP",
+                            value: 4386,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "ARP",
+                            value: 4055,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "RARP",
+                            value: 2467,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "ICMP",
+                            value: 1898,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "PPTP",
+                            value: 1484,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "L2TP",
+                            value: 1112,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "ICMPv6",
+                            value: 965,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "IGMP",
+                            value: 847,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "IPsec",
+                            value: 582,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "TLS",
+                            value: 555,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "SCTP",
+                            value: 550,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "RSVP",
+                            value: 462,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "OSPF",
+                            value: 366,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "Rita Ora",
+                            value: 360,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "DHCP",
+                            value: 282,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "FTP",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "DNS",
+                            value: 265,
+                            itemStyle: createRandomItemStyle()
+                        },
+                        {
+                            name: "HTTP",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "HTTPS",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "IRC",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "NNTP",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "XMPP",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "POP3",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "SMTP",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "SNMP",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "SSH",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "TELNET",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "RPC",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "RTCP",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "QUIC",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "RTSP",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "SDP",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "SOAP",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "SSDP",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "BGP",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        },{
+                            name: "RIP",
+                            value: 273,
+                            itemStyle: createRandomItemStyle()
+                        }
+                    ]
+                }]
+            };
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+        );
+    </script>
+
+
+    <div>
+        <div class="container ">
+            <form enctype="multipart/form-data" method="POST" action="{{url_for('upload')}}">
+                <input id="file" name="pcap" class="file" type="file" data-min-file-count="1">
+                <br>
+                <button type="submit" class="button button-royal button-pill button-giant">上传</button>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="container"><p id='uploadinfo' class="alert alert-success">{% with messages = get_flashed_messages() %}{% if messages %}{% for message in messages %}{{ message }}{% endfor %}{% endif %}{% endwith %}</p></div>
+</div>
+
+<script src="../../static/bootstrap-3.3.5/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="../../static/bootstrap-3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../../static/bootstrap-3.3.5/js/fileinput.min.js" type="text/javascript"></script>
+<script src="../../static/upload/fileinput_locale_zh.js" type="text/javascript"></script>
+<script>
+        $(document).ready(function(){
+            if ($("#uploadinfo").text() == "") {
+                $("#uploadinfo").hide()
+            }
+        })
+</script>
+
+</body>
+</html>

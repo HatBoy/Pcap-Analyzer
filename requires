@@ -1,0 +1,4 @@
+bootstrap 3.3.5
+jQuery 1.11.3
+Flask 0.10.1
+Flask-WTF 0.12

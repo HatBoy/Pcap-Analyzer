@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FTP数据</title>
+
+    <link href="../../static/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../static/bootstrap-3.3.5/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+    <link type="text/css" href="../../static/jquery-ui-bootstrap/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
+
+    <script src="../../static/bootstrap-3.3.5/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../../static/bootstrap-3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../../static/jquery-ui-bootstrap/assets/js/jquery-ui-1.10.0.custom.min.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center">敏感数据</h2>
+</div>
+<br>
+
+<div class="bs-example" data-example-id="hoverable-table">
+    <table class="table table-hover table-responsive  table-condensed table-striped">
+      <thead>
+        <tr>
+            <th class="text-center">序号</th>
+            <th class="text-center">连接</th>
+            <th class="text-center">协议</th>
+            <th class="text-center">数据</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for id, sen in enumerate(sendata) %}
+      <tr data-toggle="modal" data-target="#myModal">
+      <th scope="row" class="text-center" id="id">{{ id + 1 }}</th>
+          <td class="text-nowrap text-center">{{ sen['ip_port'].split(':')[0] }}:{{ sen['ip_port'].split(':')[1] }}</td>
+          <td class="text-nowrap text-center">{{ sen['ip_port'].split(':')[2] }}</td>
+          <td class="text-center text-nowrap">{{ sen['result'] }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" style="width:600px;margin: 0 auto; word-break:break-all">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">连接详情</h4>
+      </div>
+      <div class="modal-body" style="height:400px; overflow-x: hidden;overflow-y:auto;">
+
+           <div class="container-fluid">
+            <div class="accordion"  id="accordion">
+            <div class="mydata"></div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--table点击事件-->
+<script>
+    $(function () {
+    $("table > tbody > tr").click(function () {
+        var id=$(this).children('th').eq(0).text();
+        $.ajax({
+        type: "GET",//jquery 请求方式为 get
+        url: "/sendata?id="+id,//jquery 请求URL
+        dataType: "html",//jquery接受类型 可以 json js html 等数据
+        cache: false,//是否缓存
+        success: function(a) {
+            $(".mydata").html(a);
+        }
+    });
+    });
+})
+</script>
+
+<!--模态框拖拽-->
+<script>
+    $("#myModal").draggable({
+    handle: ".modal-header"
+});
+</script>
+
+</body>
+</html>

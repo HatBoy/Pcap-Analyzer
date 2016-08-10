@@ -1,0 +1,364 @@
+/***
+Search Page
+***/
+.search-forms {
+  margin-bottom:25px;
+  background:#f0f6fa;
+}
+
+/*search default*/
+.search-default form {
+  margin-bottom:0;
+  padding:12px 14px;
+}
+
+.search-default .chat-form {
+  margin:0;
+  padding:0;
+  background:none;
+  overflow:hidden;
+  position:relative;
+}
+
+.search-default .chat-form button {
+  top:0;
+  right:0;
+  position:absolute;
+}
+
+.search-default .chat-form .input-cont {
+  margin-right:108px;
+}
+
+.search-default .chat-form .input-cont input:focus{
+  border: 1px solid #35aa47 !important;
+}
+
+.search-result {
+  background:#fafafa;
+}
+
+.search-result .portfolio-text img {
+  border-left:solid 3px #169ef4;
+}
+
+.search-result .portfolio-text h4 {
+  color:#555d69;
+  font-size:20px;
+  font-weight:400;
+  margin-top:10px;
+}
+
+.search-result .portfolio-info {
+  padding:12px 20px;
+}
+
+.search-result .portfolio-info span {
+  font-size:28px;
+}
+
+.search-result .portfolio-info span em {
+  font-size:24px;
+  font-style:normal;
+  text-transform:none;
+}
+
+/*portfolio block*/
+.portfolio-block {
+  background:#f7f7f7;
+  margin-bottom:15px;
+}
+
+.portfolio-block .span5 {
+  overflow:hidden;
+}
+
+/*portfolio text*/
+.portfolio-text {
+  overflow:hidden;
+}
+
+.portfolio-text h4 {
+}
+
+.portfolio-text img {
+  float:left;
+  margin-right:15px;
+}
+
+.portfolio-text .portfolio-text-info {
+  overflow:hidden;
+}
+
+/*portfolio button*/
+.portfolio-btn a {
+  display:block;
+  padding:28px 0;
+  background:#ddd !important;
+}
+
+.portfolio-btn a:hover {
+  background:#1d943b !important;
+}
+
+.portfolio-btn span {
+  color:#fff;
+  font-size:22px;
+  font-weight:200;  
+}
+
+/*portfolio info*/
+.portfolio-info {
+  float:left;
+  color:#616161;
+  font-size:12px;
+  padding:12px 25px;
+  margin-bottom:5px;
+  text-transform:uppercase;
+}
+
+.portfolio-info span {
+  color:#16a1f2;
+  display:block;
+  font-size:30px;
+  margin-top:5px;
+  font-weight:200;
+  text-transform:uppercase;
+}
+
+.search-result .search-btn {
+  text-align:center;
+  background:#f3f3f3;
+  padding:30px 10px 14px;
+}
+
+.search-result .search-btn p {
+  color:#9c9c9c;
+  font-size:22px;
+}
+
+.search-result .search-btn p em {
+  color:#ffa801;
+  font-size:34px;
+  font-style:normal;
+}
+
+.search-result .search-btn a {
+  font-size: 18px;
+  padding: 6px 20px;
+  text-transform: uppercase;
+}
+  
+/*search classic*/
+.search-classic {
+  margin-bottom:30px;
+}
+
+.search-classic h4 {
+  margin-bottom:3px;
+}
+
+.overflow-hidden {
+  overflow:hidden;
+}
+
+/***
+Search Page
+***/
+/*Booking Form*/
+.booking-search {
+  padding: 15px;
+  margin-bottom: 10px;
+  background: #fafafa;
+}
+
+.booking-search form {
+  margin: 0;
+}
+
+.booking-search .booking-btn {
+  font-size: 18px;
+  padding: 9px 15px;
+  min-width: 248px;
+}
+
+.booking-search input.m-wrap {
+  background: #fff !important;
+}
+
+.booking-search .margin-right-20 {
+  margin-right: 20px;
+}
+
+.booking-search .search-clearfix {
+  overflow: hidden;
+}
+
+.booking-search .booking-option .controls {
+  padding: 5px 0;
+}
+
+.booking-search .search-clearfix .control-group,
+.booking-search .search-clearfix .input-append, 
+.booking-search .search-clearfix .input-prepend {
+  margin-bottom: 0;
+}
+
+.booking-search .margin-bottom-20 {
+  margin-bottom: 20px;
+}
+
+/*Booking Offer*/
+.booking-offer {
+  position: relative;
+}
+
+.booking-offer .booking-offer-in {
+  top: 15px;
+  left: 15px;
+  color: #fff;
+  padding: 15px;
+  position: absolute;
+  background: url(../image/bg-opacity.png);
+}
+
+.booking-offer .booking-offer-in em {
+  font-size: 17px;
+  font-style: normal;
+}
+
+.booking-offer .booking-offer-in p {
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.booking-offer .booking-offer-in span {
+  font-size: 26px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.booking-app {
+  margin-bottom: 10px;
+}
+
+.booking-app a {
+  color: #fff;
+  padding: 15px;
+  display: block;
+  overflow: hidden;
+  background: #78ccf8;  
+}
+
+.booking-app a:hover {
+  background: #4d90fe;
+  text-decoration: none;
+}
+
+.booking-app span {
+  top: 3px;
+  color: #fff;
+  font-size: 20px;
+  position: relative;
+}
+
+.booking-app i {
+  color: #fff;
+  font-size: 40px;
+  line-height: 18px;
+}
+
+/*Booking Blocks (Content)*/
+.booking-blocks {
+  overflow: hidden;
+}
+
+.booking-blocks .booking-img {
+  width: 140px;
+  margin-right: 10px;
+}
+
+.booking-blocks .booking-img li {
+  color: #777;
+}
+
+.booking-blocks .booking-img li i {
+  color: #78ccf8;
+  font-size: 12px;
+  margin-right: 5px;
+}
+
+.booking-blocks .booking-img img {
+  float: left;
+  width: 140px;
+  height: auto;
+  margin: 3px 10px 10px 0;
+}
+
+.booking-blocks h2 {
+  margin-top: 0;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.booking-blocks ul.inline li {
+  padding: 0;
+}
+
+.booking-blocks ul.inline li i {
+  color: #f8be2c;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.booking-blocks ul.inline li i:hover {
+  color: #f8be2c;
+  background: #c00;
+}
+
+/*Search Images*/
+.search-images li {
+  position: relative;
+}
+
+.search-images li a span {
+  left: 0;
+  bottom: 0;
+  color: #eee;
+  width: 100%;
+  display: none;
+  padding: 5px 0;
+  text-align: left;
+  position: absolute;
+  background: url(../image/bg-opacity.png);  
+}
+
+.search-images li a:hover span {
+  display: block;
+}
+
+.search-images li a span em {
+  padding: 0 5px;
+  font-style: normal;
+}
+
+/*Others*/
+.space40 {
+  height: 40px !important;
+  clear: both;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10px !important;
+}
+
+.margin-bottom-20 {
+  margin-bottom: 20px !important;
+}
+
+@media (max-width: 480px) {
+  .booking-offer .booking-offer-in {
+    right: 15px;
+  }
+}

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+	<meta charset="utf-8" />
+
+	<title>Pcap Analyzer</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta content="" name="description" />
+
+	<meta content="" name="author" />
+
+
+	<link href="../../static/media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+	<link href="../../static/media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+
+	<link href="../../static/media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+	<link href="../../static/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
+
+	<link href="../../static/media/css/style.css" rel="stylesheet" type="text/css"/>
+
+	<link href="../../static/media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+
+	<link href="../../static/media/css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+
+	<link href="../../static/media/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+
+
+	<link href="../../static/media/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
+
+	<link href="../../static/media/css/daterangepicker.css" rel="stylesheet" type="text/css" />
+
+	<link href="../../static/media/css/fullcalendar.css" rel="stylesheet" type="text/css"/>
+
+	<link href="../../static/media/css/jqvmap.css" rel="stylesheet" type="text/css" media="screen"/>
+
+	<link href="../../static/media/css/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen"/>
+
+	<link rel="shortcut icon" href="../../static/media/image/favicon.ico" />
+
+	<style>
+		.main-content {
+    margin-top: 0;
+    min-height: 850px;
+    width: 99.7%;
+}
+	</style>
+
+</head>
+
+
+<body class="page-header-fixed">
+
+	<!-- BEGIN HEADER -->
+
+	<div class="header navbar navbar-inverse navbar-fixed-top">
+
+		<!-- BEGIN TOP NAVIGATION BAR -->
+
+		<div class="navbar-inner">
+
+			<div class="container-fluid">
+
+				<!-- BEGIN LOGO -->
+
+				<a class="brand" href="{{url_for('index')}}">
+				   <!--
+
+				   <img src="media/image/logo.png" alt="logo"/>
+				   -->
+				   &nbsp;&nbsp;Pcap Analyzer
+
+				</a>
+
+				<!-- END LOGO -->
+
+				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
+
+				<a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+
+				   <img src="../../static/media/image/menu-toggler.png" alt="" />
+
+				</a>
+
+				<!-- END RESPONSIVE MENU TOGGLER -->
+
+				<!-- END TOP NAVIGATION MENU -->
+
+			</div>
+
+		</div>
+
+		<!-- END TOP NAVIGATION BAR -->
+
+	</div>
+
+	<!-- END HEADER -->
+
+	<!-- BEGIN CONTAINER -->
+
+	<div class="page-container">
+
+		<!-- BEGIN SIDEBAR -->
+
+		<div class="page-sidebar nav-collapse collapse">
+
+			<!-- BEGIN SIDEBAR MENU -->        
+
+			<ul class="page-sidebar-menu">
+
+				<li>
+
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+
+					<div class="sidebar-toggler hidden-phone"></div>
+
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+
+				</li>
+
+				<li>
+
+					<br/>
+
+				</li>
+
+				<li class="start active ">
+
+					<a href="{{url_for('upload')}}"  target="main-content">
+
+					<i class="icon-home"></i> 
+
+					<span class="title">首页</span>
+
+					<span class="selected"></span>
+
+					</a>
+
+				</li>
+
+				<li class="">
+
+					<a href="javascript:;">
+
+					<i class="icon-bar-chart"></i>
+
+					<span class="title">数据分析</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+
+						<li >
+							<a href="{{ url_for('basedata') }}" target="main-content">
+							   基本信息
+							</a>
+						</li>
+						<li >
+							<a href="{{ url_for('protoanalyzer') }}"  target="main-content">
+							  协议分析
+							</a>
+						</li>
+                        <li >
+							<a href="{{ url_for('flowanalyzer') }}"  target="main-content">
+							  流量分析
+							</a>
+						</li>
+                        <li >
+							<a href="{{ url_for('ipmap') }}"  target="main-content">
+							  访问地图
+							</a>
+						</li>
+					</ul>
+
+				</li>
+				<li class="">
+
+					<a href="javascript:;">
+
+					<i class="icon-eye-open"></i>
+
+					<span class="title">数据提取</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+
+						<li>
+							<a href="{{ url_for('webdata') }}" target="main-content">
+							   Web数据
+							</a>
+						</li>
+
+						<li>
+							<a href="{{ url_for('maildata') }}"  target="main-content">
+							  Mail数据
+							</a>
+						</li>
+
+                        <li>
+							<a href="{{ url_for('ftpdata') }}"  target="main-content">
+							  FTP数据
+							</a>
+						</li>
+
+                        <li>
+							<a href="{{ url_for('telnetdata') }}"  target="main-content">
+							  Telnet数据
+							</a>
+						</li>
+
+                        <li>
+							<a href="{{ url_for('sendata') }}"  target="main-content">
+							  敏感数据
+							</a>
+						</li>
+
+					</ul>
+
+				</li>
+								<li class="">
+
+					<a href="javascript:;">
+
+					<i class="icon-warning-sign"></i>
+
+					<span class="title">异常信息</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+
+						<li >
+
+							<a href="{{ url_for('exceptinfo') }}" target="main-content">
+							   异常警告
+							</a>
+						</li>
+
+					</ul>
+
+				</li>
+				<li class="">
+
+					<a href="javascript:;">
+
+					<i class="icon-download-alt"></i>
+
+					<span class="title">文件提取</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+
+						<li >
+
+							<a href="{{ url_for('webfile') }}" target="main-content">
+							   Web文件
+							</a>
+
+						</li>
+
+						<li >
+
+							<a href="{{ url_for('mailfile') }}" target="main-content">
+							   Mail文件
+							</a>
+
+						</li>
+
+						<li >
+
+							<a href="{{ url_for('ftpfile') }}" target="main-content">
+							   FTP文件
+							</a>
+
+						</li>
+
+                        <li >
+
+							<a href="{{ url_for('allfile') }}" target="main-content">
+							   所有文件
+							</a>
+
+						</li>
+
+					</ul>
+
+				</li>
+
+
+{#				<li class="">#}
+{##}
+{#					<a href="javascript:;">#}
+{##}
+{#					<i class="icon-cogs"></i> #}
+{##}
+{#					<span class="title">网络工具</span>#}
+{##}
+{#					<span class="arrow "></span>#}
+{##}
+{#					</a>#}
+{##}
+{#					<ul class="sub-menu">#}
+{##}
+{#						<li >#}
+{##}
+{#							<a href="{{ url_for('nettools') }}" target="main-content">#}
+{#                               网络工具#}
+{#							</a>#}
+{##}
+{#						</li>#}
+{#                        <li >#}
+{##}
+{#							<a href="{{ url_for('protohelp') }}" target="main-content">#}
+{#							   协议说明#}
+{#							</a>#}
+{##}
+{#						</li>#}
+{##}
+{##}
+{#					</ul>#}
+{##}
+{#				</li>#}
+
+
+			</ul>
+
+			<!-- END SIDEBAR MENU -->
+
+		</div>
+
+		<!-- END SIDEBAR -->
+
+		<!-- BEGIN PAGE -->
+		<div class="page-content" id="div-content">
+			<!--<iframe name="main-content" id="iframe-content" src="upload.html" frameborder="0" scrolling="auto"></iframe>-->
+			<iframe class="main-content" src="{{url_for('upload')}}" name="main-content" scrolling="auto"></iframe>
+		</div>
+		<!-- END PAGE -->
+	</div>
+
+
+	<!-- END CONTAINER -->
+
+	<!-- BEGIN FOOTER -->
+
+	<div class="footer">
+
+		<div class="footer-inner">
+
+			版权所有  侵权必究
+
+		</div>
+
+
+
+	</div>
+
+	<!-- END FOOTER -->
+
+	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+
+	<!-- BEGIN CORE PLUGINS -->
+
+	<script src="../../static/media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+
+	<script src="../../static/media/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+
+	<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+
+	<script src="../../static/media/js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+
+	<script src="../../static/media/js/bootstrap.min.js" type="text/javascript"></script>
+
+
+	<script src="../../static/media/js/jquery.slimscroll.min.js" type="text/javascript"></script>
+
+	<script src="../../static/media/js/jquery.blockui.min.js" type="text/javascript"></script>
+
+	<script src="../../static/media/js/jquery.cookie.min.js" type="text/javascript"></script>
+
+	<script src="../../static/media/js/jquery.uniform.min.js" type="text/javascript" ></script>
+
+	<!-- END CORE PLUGINS -->
+
+
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+
+	<script src="../../static/media/js/app.js" type="text/javascript"></script>
+
+	<script src="../../static/media/js/index.js" type="text/javascript"></script>
+
+	<!-- END PAGE LEVEL SCRIPTS -->  
+
+	<script>
+
+		jQuery(document).ready(function() {    
+
+		   App.init(); // initlayout and core plugins
+
+		   //Index.init();
+
+
+		});
+
+	</script>
+
+	<!-- END JAVASCRIPTS -->
+<!--
+	<script type="text/javascript">
+		function iframechange() {
+			var width = document.getElementsByClassName("page-content").width();
+			var height = document.getElementsByClassName("page-content").height();
+			document.getElementById("iframe-content").width = width;
+			document.getElementById("iframe-content").height = height;
+			console.log(height);
+		}
+		document.getElementsByClassName("page-content").onresize = iframechange();
+	</script>-->
+  </body>
+
+<!-- END BODY -->
+
+</html>
