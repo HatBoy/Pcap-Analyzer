@@ -10,6 +10,9 @@
 + 7.简单的分析数据包中的安全风险（WEB攻击，暴力破解）
 + 8.提取数据报中的特定协议的传输文件或者所有的二进制文件
 
+##效果展示
+![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/index.png)
+
 ##安装部署过程:
 
 运行环境：Python 2.7.X
