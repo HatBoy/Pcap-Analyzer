@@ -11,34 +11,34 @@
 + 8.提取数据报中的特定协议的传输文件或者所有的二进制文件
 
 ##效果展示
-首页：
+### 首页:
 ![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/index.png)
 
-基本数据展示：
+### 基本数据展示:
 ![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/basedata.png)
 
-协议分析：
+### 协议分析:
 ![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/protoanalyxer.png)
 
-流量分析：
+### 流量分析:
 ![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/flowanalyzer.png)
 
-访问IP经纬度地图：
+### 访问IP经纬度地图:
 ![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/ipmap.png)
 
-会话提取：
+### 会话提取:
 ![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/getdata.png)
 
-攻击信息警告：
+### 攻击信息警告:
 ![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/attackinfo.png)
 
-文件提取：
+### 文件提取:
 ![Alt Text](https://github.com/HatBoy/Pcap-Analyzer/blob/master/images/getfiles.png)
 
 ##安装部署过程:
 
-运行环境：Python 2.7.X
-操作系统：Linux (以Ubuntu 15.10为例)
++ 运行环境：Python 2.7.X
++ 操作系统：Linux (以Ubuntu 15.10为例)
 
 ###1.Python相关环境配置（Ubuntu默认安装Python2.7不需要额外安装Python）
 Python包管理器安装：sudo apt-get install python-setuptools python-pip
@@ -56,9 +56,9 @@ Python包管理器安装：sudo apt-get install python-setuptools python-pip
 + PDF_FOLDER = '/home/dj/Files/PDF/'   PCAP保存为PDF时保存的位置
 
 ###4.服务器安装
-Gunicorn服务器：pip install gunicorn
-Nginx服务器：sudo apt-get install nginx
-Nginx配置：修改/etc/nginx/nginx.conf文件，在http{}中添加下面代码：
++ Gunicorn服务器：pip install gunicorn
++ Nginx服务器：sudo apt-get install nginx
++ Nginx配置：修改/etc/nginx/nginx.conf文件，在http{}中添加下面代码：
 ```
 server { 
 listen 81; 
@@ -81,8 +81,8 @@ error_log /var/log/nginx/error.log;
 ```
 
 ###5.启动系统：
-进入系统所在目录：../pcap-analyzer
-通过Gunicorn服务器服务器启动系统，运行命令：gunicorn -c deploy_config.py run:app
-此时只能本地访问系统，地址：http://127.0.0.1:8000
-启动Nginx服务器：sudo service nginx start
-此时其他主机也可访问该系统，地址：http://服务器IP:81
++ 进入系统所在目录：../pcap-analyzer
++ 通过Gunicorn服务器服务器启动系统，运行命令：gunicorn -c deploy_config.py run:app
++ 此时只能本地访问系统，地址：http://127.0.0.1:8000
++ 启动Nginx服务器：sudo service nginx start
++ 此时其他主机也可访问该系统，地址：http://服务器IP:81
