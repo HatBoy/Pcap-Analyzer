@@ -52,7 +52,7 @@ Python包管理器安装：sudo apt-get install python-setuptools python-pip
 ###3.修改配置文件
 注意修改config.py配置文件中的目录位置
 + UPLOAD_FOLDER = '/home/dj/PCAP/'     上传的PCAP文件保存的位置
-+ FILE_FOLDER = '/home/dj/Files/'      提取文件时保存的位置，下面必须要用All、FTP、Mail、Web子目录，用于存放提取不同协议的文件
++ FILE_FOLDER = '/home/dj/Files/'      提取文件时保存的位置，下面必须要有All、FTP、Mail、Web子目录，用于存放提取不同协议的文件
 + PDF_FOLDER = '/home/dj/Files/PDF/'   PCAP保存为PDF时保存的位置
 
 ###4.服务器安装
