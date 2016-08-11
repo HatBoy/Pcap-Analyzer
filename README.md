@@ -86,3 +86,10 @@ error_log /var/log/nginx/error.log;
 + 此时只能本地访问系统，地址：http://127.0.0.1:8000
 + 启动Nginx服务器：sudo service nginx start
 + 此时其他主机也可访问该系统，地址：http://服务器IP:81
+
+
+##分析优化
+###对数据包的分析结果的准确率可通过修改配置文件来提高，修正
++ 替换./app/utils/GeoIP/GeoLite2-City.mmdb的IP地址经纬度数据库文件能提高IP经纬度地图的准确率
++ 修改./app/utils/protocol/目录中的各个TCP/IP协议栈的表示号和对应的协议名称可修正协议分析结果
++ 修改./app/utils/waring/HTTP_ATTACK文件可提高数据包中HTTP协议攻击的准确率
