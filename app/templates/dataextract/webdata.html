@@ -36,7 +36,7 @@
       <th scope="row" class="text-center" id="id">{{ web['data_id'] }}</th>
           <td class="text-nowrap text-center">{{ web['ip_port'].split(':')[0] }}:{{ web['ip_port'].split(':')[1] }}</td>
           <td class="text-nowrap text-center">HTTP</td>
-          <td class="text-left text-nowrap">{{ web['data'][:80] }}</td>
+          <td class="text-left text-nowrap">{{ web['data'][:100] }}</td>
           <td class="text-center">{{ web['lens'] }}KB</td>
         </tr>
       {% endfor %}

@@ -7,7 +7,7 @@ import time
 class PcapDecode:
     def __init__(self):
         #ETHER:读取以太网层协议配置文件
-        with open('./app/utils/protocol/ETHER', 'r') as f:
+        with open('./app/utils/protocol/ETHER', 'r', encoding='UTF-8') as f:
             ethers = f.readlines()
         self.ETHER_DICT = dict()
         for ether in ethers:
@@ -15,7 +15,7 @@ class PcapDecode:
             self.ETHER_DICT[int(ether.split(':')[0])] = ether.split(':')[1]
 
         #IP:读取IP层协议配置文件
-        with open('./app/utils/protocol/IP', 'r') as f:
+        with open('./app/utils/protocol/IP', 'r', encoding='UTF-8') as f:
             ips = f.readlines()
         self.IP_DICT = dict()
         for ip in ips:
@@ -23,7 +23,7 @@ class PcapDecode:
             self.IP_DICT[int(ip.split(':')[0])] = ip.split(':')[1]
 
         #PORT:读取应用层协议端口配置文件
-        with open('./app/utils/protocol/PORT', 'r') as f:
+        with open('./app/utils/protocol/PORT', 'r', encoding='UTF-8') as f:
             ports = f.readlines()
         self.PORT_DICT = dict()
         for port in ports:
@@ -31,7 +31,7 @@ class PcapDecode:
             self.PORT_DICT[int(port.split(':')[0])] = port.split(':')[1]
 
         #TCP:读取TCP层协议配置文件
-        with open('./app/utils/protocol/TCP', 'r') as f:
+        with open('./app/utils/protocol/TCP', 'r', encoding='UTF-8') as f:
             tcps = f.readlines()
         self.TCP_DICT = dict()
         for tcp in tcps:
@@ -39,7 +39,7 @@ class PcapDecode:
             self.TCP_DICT[int(tcp.split(':')[0])] = tcp.split(':')[1]
 
         #UDP:读取UDP层协议配置文件
-        with open('./app/utils/protocol/UDP', 'r') as f:
+        with open('./app/utils/protocol/UDP', 'r', encoding='UTF-8') as f:
             udps = f.readlines()
         self.UDP_DICT = dict()
         for udp in udps:

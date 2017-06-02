@@ -36,7 +36,7 @@
       <th scope="row" class="text-center" id="id">{{ telnet['data_id'] }}</th>
           <td class="text-nowrap text-center">{{ telnet['ip_port'].split(':')[0] }}:{{ telnet['ip_port'].split(':')[1] }}</td>
           <td class="text-nowrap text-center">Telnet</td>
-          <td class="text-left text-nowrap">{{ telnet['data'][telnet['data'].find('Password'):telnet['data'].find('Password')+20] }}</td>
+          <td class="text-left text-nowrap">{{ telnet['data'][:100] }}</td>
           <td class="text-center">{{ telnet['lens'] }}KB</td>
         </tr>
       {% endfor %}

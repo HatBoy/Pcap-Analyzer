@@ -71,7 +71,7 @@
                             type : 'category',
                             name : '相对时间',
                             boundaryGap : true,
-                            data : {{ time_flow.keys() }}
+                            data : {{ time_flow_keys }}
                         }
                     ],
                     yAxis : [
@@ -96,7 +96,7 @@
                                     },
                                 emphasis:{label:{show:true}}
                                     },
-                            data:{{ time_flow.values() }}
+                            data:{{ time_flow_values }}
                         }
                     ]
                 };

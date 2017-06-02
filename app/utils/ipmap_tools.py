@@ -2,20 +2,16 @@
 __author__ = 'dj'
 
 from scapy.all import *
-import json
-import urllib2
-import urllib
+import requests
 import os
 import geoip2.database
 
 #获取本机外网IP
 def getmyip():
     try:
-        req = urllib2.Request(url='http://ip.taobao.com/service/getIpInfo2.php', data=urllib.urlencode({'ip':'myip'}))
-        html = urllib2.urlopen(req, timeout=5).read()
-        data = json.loads(html)
-        myip = data['data']['ip']
-        return myip
+        headers = {'User-Agent': 'Baiduspider+(+http://www.baidu.com/search/spider.htm'}
+        ip = requests.get('http://icanhazip.com', headers=headers).text
+        return ip.strip()
     except:
         return None
 

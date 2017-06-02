@@ -1,7 +1,7 @@
 #coding:UTF-8
 __author__ = 'dj'
 
-from data_extract import web_data, telnet_ftp_data, mail_data
+from .data_extract import web_data, telnet_ftp_data, mail_data
 from scapy.all import *
 from collections import OrderedDict
 import base64
@@ -14,16 +14,17 @@ def web_file(PCAPS, host_ip, folder):
     web_list = list()
     webdata = web_data(PCAPS, host_ip)
     for web in webdata:
+        raw_data_list = web['raw_data'].split(b'\r\n\r\n')
         data_list = web['data'].split('\r\n\r\n')
         switch = False
         start = False
         type = ''
-        for data in data_list:
+        for raw_data, data in zip(raw_data_list, data_list):
             if start:
                 file_name = type + '_' + web['ip_port'].split(':')[0] + '_' + web['ip_port'].split(':')[1] + '_' + filename
-                with open(folder + file_name, 'w') as f:
-                    f.write(data.strip())
-                web_list.append({'ip_port':web['ip_port'].split(':')[0]+':'+web['ip_port'].split(':')[1], 'filename':(folder+file_name).decode('utf-8'), 'size':'%.2f'%(os.path.getsize(folder+file_name)/1024.0)})
+                with open(folder + file_name, 'wb') as f:
+                    f.write(raw_data.strip())
+                web_list.append({'ip_port':web['ip_port'].split(':')[0]+':'+web['ip_port'].split(':')[1], 'filename':(folder+file_name), 'size':'%.2f'%(os.path.getsize(folder+file_name)/1024.0)})
                 start = False
                 switch = False
             if switch:
@@ -64,9 +65,11 @@ def ftp_file(PCAPS, host_ip, folder):
     port_file_list = list()
     for ftp_cmd in ftp_cmd_data:
         cmd_data = ftp_cmd['data']
-        if "PASV" in cmd_data:  #PASV模式
+        if "PASV" in cmd_data:  #PASV模式,通过Web浏览器访问模式
             pattern_pasv = re.compile(r'PASV(.*?)RETR(.*?)150', re.S)
             result = pattern_pasv.findall(cmd_data)
+            if not result:
+                continue
             if 'LIST' in result[0][0]:
                 start = 1
             else:
@@ -86,11 +89,11 @@ def ftp_file(PCAPS, host_ip, folder):
             count = 0
             for ftp in ftpdata[start:]:
                 file_name = ftp['ip_port'].split(':')[0] + '_' + ftp['ip_port'].split(':')[1] + '_'+filename_list[count]
-                with open(folder + file_name, 'w') as f:
-                    f.write(ftp['data'])
+                with open(folder + file_name, 'wb') as f:
+                    f.write(ftp['raw_data'])
                 count += 1
                 ftp_list.append({'ip_port':ftp['ip_port'].split(':')[0] + ':' + ftp['ip_port'].split(':')[1], 'filename':folder+file_name, 'size':'%.2f'%(os.path.getsize(folder+file_name)/1024.0)})
-        elif 'PORT' in cmd_data:  #PORT模式
+        elif 'PORT' in cmd_data:  #PORT模式,通过终端访问模式
             pattern_port = re.compile(r'PORT(.*?)(RETR|STOR)(.*?)150', re.S)
             result = pattern_port.findall(cmd_data)
             for port, pattern, file in result:
@@ -101,46 +104,74 @@ def ftp_file(PCAPS, host_ip, folder):
             for port, filename in port_file_list:
                 ftpdata = telnet_ftp_data(PCAPS, host_ip, port)[0]
                 file_name = ftpdata['ip_port'].split(':')[0] + '_' + ftpdata['ip_port'].split(':')[1] + '_'+filename
-                with open(folder + file_name, 'w') as f:
-                    f.write(ftpdata['data'])
+                with open(folder + file_name, 'wb') as f:
+                    f.write(ftpdata['raw_data'])
                 ftp_list.append({'ip_port':ftpdata['ip_port'].split(':')[0] + ':' + ftpdata['ip_port'].split(':')[1], 'filename':folder+file_name, 'size':'%.2f'%(os.path.getsize(folder+file_name)/1024.0)})
         else:
             pass
     return ftp_list
 
+#填充不符合规范的base64数据
+def base64padding(data):
+    missing_padding = 4 - len(data) % 4
+    if missing_padding:
+        data += '='* missing_padding
+    return data
 
 #mail文件
 def mail_file(PCAPS, host_ip, folder):
+    filename_p = re.compile(r'filename="(.*?)"', re.S)
+    charset = 'UTF-8'
     mail_list = list()
     maildata = mail_data(PCAPS, host_ip)
     for mail in maildata:
         file_dict = OrderedDict()
-        data_list = mail['data'].split('\r\n')
+        data_list = mail['data'].split('\r\n\r\n')
         switch = False
         for data in data_list:
             if switch:
-                if not data:
-                    space += 1
-                    if space == 2:
-                        switch = False
-                        file_dict[file_dict.keys()[-1]] = file_data
+                if data:
+                    data = data.strip().replace('\r\n', '')
+                    filedata = base64.b64decode(base64padding(data))
                 else:
-                    file_data += data
+                    filedata = None
+                try:
+                    filedata = filedata.decode(charset)
+                except Exception as e:
+                    pass
+                file_dict[mail['ip_port'].split(':')[0]+'_'+mail['ip_port'].split(':')[1]+'_'+filename] = filedata
+                switch = False
             if 'filename' in data:
                 switch = True
-                space = 0
-                file_data = ''
-                file_dict[mail['ip_port'].split(':')[0]+'_'+mail['ip_port'].split(':')[1]+'_'+data.split('=')[-1][1:-1]] = ''
+                filename_ = filename_p.search(data)
+                if filename_:
+                    filename_ = filename_.group(1).strip()
+                    if filename_ and '=?' in filename_:
+                        filename_ = filename_.split('?')
+                        charset = filename_[1]
+                        filename = base64.b64decode(base64padding(filename_[3])).decode(charset, 'ignore')
+                    else:
+                        filename = filename_
+                else:
+                    filename = 'unknow'
         for filename, filedata in file_dict.items():
-            with open(folder+filename, 'w') as f:
-                f.write(base64.b64decode(filedata.strip()))
+            mode = 'wb'
+            encoding = None
+            if isinstance(filedata, str):
+                mode = 'w'
+                encoding = 'UTF-8'
+            elif isinstance(filedata, bytes):
+                mode = 'wb'
+                encoding = None
+            with open(folder+filename, mode, encoding=encoding) as f:
+                f.write(filedata)
             mail_list.append({'ip_port':filename.split('_')[0]+':'+filename.split('_')[1], 'filename':folder+filename, 'size':'%.2f'%(os.path.getsize(folder+filename)/1024.0)})
     return mail_list
 
 #所有二进制文件
 def all_files(PCAPS, folder):
     file_header = dict()
-    with open('./app/utils/protocol/FILES', 'r') as f:
+    with open('./app/utils/protocol/FILES', 'r', encoding='UTF-8') as f:
         lines = f.readlines()
     for line in lines:
         file_header[line.split(':')[0].strip()] = line.split(':')[1].strip()
@@ -148,7 +179,7 @@ def all_files(PCAPS, folder):
     allfiles_dict = OrderedDict()
     allpayloads_dict = OrderedDict()
     for sess, ps in sessions.items():
-        payload = ''
+        payload = b''
         for p in ps:
             if p.haslayer(Raw):
                 payload += p[Raw].load
@@ -156,12 +187,11 @@ def all_files(PCAPS, folder):
                 allpayloads_dict[sess] = payload
     i = 0
     for sess, payload in allpayloads_dict.items():
-        datas = payload.split('\r\n\r\n')
+        datas = payload.split(b'\r\n\r\n')
         for data in datas:
             d = binascii.hexlify(data.strip())
-            prefix = d[:10]
             for header, suffix in file_header.items():
-                if re.match(header, prefix):
+                if d.startswith(header.encode('UTF-8')):
                     filename = str(i) + suffix
                     with open(folder+filename, 'wb') as f:
                         f.write(binascii.unhexlify(d))

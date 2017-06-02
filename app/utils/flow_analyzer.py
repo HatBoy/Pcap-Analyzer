@@ -70,10 +70,10 @@ def data_in_out_ip(PCAPS, host_ip):
     in_len_dict = in_ip_len_dict
     out_packet_dict = out_ip_packet_dict
     out_len_dict = out_ip_len_dict
-    in_packet_dict = sorted(in_packet_dict.iteritems(), key=lambda d:d[1], reverse=False)
-    in_len_dict = sorted(in_len_dict.iteritems(), key=lambda d:d[1], reverse=False)
-    out_packet_dict = sorted(out_packet_dict.iteritems(), key=lambda d:d[1], reverse=False)
-    out_len_dict = sorted(out_len_dict.iteritems(), key=lambda d:d[1], reverse=False)
+    in_packet_dict = sorted(in_packet_dict.items(), key=lambda d:d[1], reverse=False)
+    in_len_dict = sorted(in_len_dict.items(), key=lambda d:d[1], reverse=False)
+    out_packet_dict = sorted(out_packet_dict.items(), key=lambda d:d[1], reverse=False)
+    out_len_dict = sorted(out_len_dict.items(), key=lambda d:d[1], reverse=False)
     in_keyp_list = list()
     in_packet_list = list()
     for key, value in in_packet_dict:

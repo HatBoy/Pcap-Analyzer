@@ -1,4 +1,8 @@
 bootstrap 3.3.5
 jQuery 1.11.3
-Flask 0.10.1
+Flask 0.11.1
 Flask-WTF 0.12
+geoip2 2.4.0
+pyx 0.14.1
+requests 2.9.1
+scapy-python3

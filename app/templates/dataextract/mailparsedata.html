@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% autoescape false %}
+
+{% if maildata['maildate'] %}
+时间 : {{ maildata['maildate'] }} </br>
+{% else %}
+时间 : unknow </br>
+{% endif %}
+
+{% if maildata['username'] %}
+用户名 : {{ maildata['username'].replace('<', '&lt;').replace('>', '&gt;') }} </br>
+{% else %}
+用户名 : unknow </br>
+{% endif %}
+
+{% if maildata['password'] %}
+密码 : {{ maildata['password'].replace('<', '&lt;').replace('>', '&gt;') }} </br>
+{% else %}
+密码 : unknow </br>
+{% endif %}
+
+{% if maildata['mailfrom'] %}
+发件人 : {{ maildata['mailfrom'].replace('<', '&lt;').replace('>', '&gt;') }} </br>
+{% else %}
+发件人 : unknow </br>
+{% endif %}
+
+{% if maildata['mailto'] %}
+收件人 : {{ maildata['mailto'].replace('<', '&lt;').replace('>', '&gt;') }} </br>
+{% else %}
+收件人 : unknow </br>
+{% endif %}
+
+{% if maildata['mailcc'] %}
+抄送 : {{ maildata['mailcc'].replace('<', '&lt;').replace('>', '&gt;').replace('\r\n', '</br>') }} </br>
+{% else %}
+抄送 : 无 </br>
+{% endif %}
+
+{% if maildata['mailmessageid'] %}
+邮件ID : {{ maildata['mailmessageid'].replace('<', '&lt;').replace('>', '&gt;') }} </br>
+{% else %}
+邮件ID : unknow </br>
+{% endif %}
+************************************************** </br>
+{% if maildata['mailsubject'] %}
+邮件主题 : {{ maildata['mailsubject'].replace('<', '&lt;').replace('>', '&gt;') }} </br>
+{% else %}
+邮件主题 : unknow </br>
+{% endif %}
+************************************************** </br>
+{% if maildata['mailcontent'] %}
+邮件内容 : {{ maildata['mailcontent'].replace('<', '&lt;').replace('>', '&gt;').replace('\r\n', '</br>') }} </br>
+{% else %}
+邮件内容 : 无 </br>
+{% endif %}
+************************************************** </br>
+{% if maildata['attachs_dict'] %}
+邮件附件 : </br>
+{% for filename, filedata in maildata['attachs_dict'].items() %}
+    <a href="{{ url_for('maildata') }}?filename={{ filename }}&id={{ dataid }} ">{{ filename }} </a></br>
+{% endfor %}
+{% else %}
+邮件附件 : 无 </br>
+{% endif %}
+{% endautoescape %}
+</body>
+</html>

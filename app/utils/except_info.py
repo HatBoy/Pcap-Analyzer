@@ -6,11 +6,11 @@ import time
 import re
 import collections
 import binascii
-from data_extract import web_data, telnet_ftp_data
+from .data_extract import web_data, telnet_ftp_data
 
 #根据可疑端口判断是否有木马病毒
 def port_warning(PCAPS, host_ip):
-    with open('./app/utils/protocol/WARN', 'r') as f:
+    with open('./app/utils/protocol/WARN', 'r', encoding='UTF-8') as f:
         warns = f.readlines()
     WARN_DICT = dict()
     for warn in warns:
@@ -48,7 +48,7 @@ def port_warning(PCAPS, host_ip):
 
 #根据WEB内容来匹配常见WEB攻击,SQL注入，XSS，暴力破解，目录遍历，任意文件下载，木马
 def web_warning(PCAPS, host_ip):
-    with open('./app/utils/warning/HTTP_ATTACK', 'r') as f:
+    with open('./app/utils/warning/HTTP_ATTACK', 'r', encoding='UTF-8') as f:
         attacks = f.readlines()
     ATTACK_DICT = dict()
     for attack in attacks:
@@ -70,7 +70,7 @@ def web_warning(PCAPS, host_ip):
             webbur_list.append(web['ip_port'].split(':')[0])
         for pattn, attk in ATTACK_DICT.items(): #特征码和攻击名称
             if pattn.upper() in data.upper():
-                webwarn_list.append({'ip_port': web['ip_port'].split(':')[0]+':'+web['ip_port'].split(':')[1], 'warn':attk.decode('utf-8'), 'time':pattn, 'data':data})
+                webwarn_list.append({'ip_port': web['ip_port'].split(':')[0]+':'+web['ip_port'].split(':')[1], 'warn':attk, 'time':pattn, 'data':data})
     ip_count = collections.Counter(webbur_list)
     warn_ip = {k:y for k,y in ip_count.items() if y>10}
     for ip, count in warn_ip.items():

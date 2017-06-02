@@ -79,12 +79,12 @@
             <table width="100%"  style="table-layout:fixed;" class="table table-hover table-responsive  table-condensed table-striped">
               <tbody>
 
-              {% for data in ip_value %}
+              {% for key, value in ip_value %}
                   <tr>
-                  <td>{{ data.values()[0].split(':')[1] }}</td>
-                  <td>{{ data.keys()[0] }}</td>
-                  <td>{{ geo_data[data.keys()[0]] }}</td>
-                  <td >{{ data.values()[0].split(':')[0] }}KB</td>
+                  <td>{{ value.split(':')[1] }}</td>
+                  <td>{{ key }}</td>
+                  <td>{{ geo_data[key] }}</td>
+                  <td >{{ value.split(':')[0] }}KB</td>
                 </tr>
               {% endfor %}
                </tbody>
@@ -357,8 +357,8 @@
                     }
                 },
                 data : [
-                    {% for data in ip_value%}
-                        [{name:'{{ mygeo[0] }}'}, {name:'{{ data.keys()[0] }}',value:{{ data.values()[0].split(':')[0] }}}],
+                    {% for key, value in ip_value%}
+                        [{name:'{{ mygeo[0] }}'}, {name:'{{ key }}',value:{{ value.split(':')[0] }}}],
                     {% endfor %}
                     [{name:'{{ mygeo[0] }}'}, {name:'{{ mygeo[0] }}',value:0}]
                 ]
@@ -381,8 +381,8 @@
                     }
                 },
                 data : [
-                    {% for data in ip_value %}
-                        {name:'{{ data.keys()[0] }}',value:{{ data.values()[0].split(':')[0] }}},
+                    {% for key, value in ip_value %}
+                        {name:'{{ key }}',value:{{ value.split(':')[0] }}},
                     {% endfor %}
                     {name:'{{ mygeo[0] }}',value:0}
                 ]

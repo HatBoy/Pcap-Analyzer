@@ -220,6 +220,12 @@
 						</li>
 
                         <li>
+							<a href="{{ url_for('clientinfo') }}"  target="main-content">
+							  客户端信息
+							</a>
+						</li>
+
+                        <li>
 							<a href="{{ url_for('sendata') }}"  target="main-content">
 							  敏感数据
 							</a>
@@ -302,42 +308,50 @@
 
 				</li>
 
+<!--
+                <li class="">
 
-{#				<li class="">#}
-{##}
-{#					<a href="javascript:;">#}
-{##}
-{#					<i class="icon-cogs"></i> #}
-{##}
-{#					<span class="title">网络工具</span>#}
-{##}
-{#					<span class="arrow "></span>#}
-{##}
-{#					</a>#}
-{##}
-{#					<ul class="sub-menu">#}
-{##}
-{#						<li >#}
-{##}
-{#							<a href="{{ url_for('nettools') }}" target="main-content">#}
-{#                               网络工具#}
-{#							</a>#}
-{##}
-{#						</li>#}
-{#                        <li >#}
-{##}
-{#							<a href="{{ url_for('protohelp') }}" target="main-content">#}
-{#							   协议说明#}
-{#							</a>#}
-{##}
-{#						</li>#}
-{##}
-{##}
-{#					</ul>#}
-{##}
-{#				</li>#}
+					<a href="javascript:;">
 
+					<i class="icon-download-alt"></i>
 
+					<span class="title">系统设置</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+
+						<li >
+
+							<a href="{{ url_for('webfile') }}" target="main-content">
+							   协议设置
+							</a>
+
+						</li>
+
+						<li >
+
+							<a href="{{ url_for('mailfile') }}" target="main-content">
+							   提取设置
+							</a>
+
+						</li>
+
+						<li >
+
+							<a href="{{ url_for('ftpfile') }}" target="main-content">
+							   策略配置
+							</a>
+
+						</li>
+
+					</ul>
+
+				</li>
+
+-->
 			</ul>
 
 			<!-- END SIDEBAR MENU -->

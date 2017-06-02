@@ -1,5 +1,9 @@
 # Pcap-Analyzer
 
+##更新说说明
++ 将项目从Python2.X移植到Python3.X
++ 修复了多个Bug
+
 ##主要功能
 + 1.展示数据包基本信息
 + 2.分析数据包协议
@@ -37,7 +41,7 @@
 
 ##安装部署过程:
 
-+ 运行环境：Python 2.7.X
++ 运行环境：Python 3.5.X
 + 操作系统：Linux (以Ubuntu 15.10为例)
 
 ###1.Python相关环境配置（Ubuntu默认安装Python2.7不需要额外安装Python）
@@ -45,9 +49,12 @@ Python包管理器安装：sudo apt-get install python-setuptools python-pip
 
 ###2.相关第三方依赖库安装：
 + sudo apt-get install tcpdump graphviz imagemagick python-gnuplot python-crypto python-pyx
-+ sudo pip install scapy
-+ sudo pip install Flask
-+ sudo pip install Flask-WTF
++ sudo pip3 install scapy-python3
++ sudo pip3 install Flask
++ sudo pip3 install Flask-WTF
++ sudo pip3 install geoip2
++ sudo pip3 install pyx
++ sudo pip3 install requests
 
 ###3.修改配置文件
 注意修改config.py配置文件中的目录位置
@@ -56,7 +63,7 @@ Python包管理器安装：sudo apt-get install python-setuptools python-pip
 + PDF_FOLDER = '/home/dj/Files/PDF/'   PCAP保存为PDF时保存的位置
 
 ###4.服务器安装
-+ Gunicorn服务器：pip install gunicorn
++ Gunicorn服务器：pip3 install gunicorn
 + Nginx服务器：sudo apt-get install nginx
 + Nginx配置：修改/etc/nginx/nginx.conf文件，在http{}中添加下面代码：
 ```

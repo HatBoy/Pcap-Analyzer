@@ -36,7 +36,7 @@
       <th scope="row" class="text-center" id="id">{{ mail['data_id'] }}</th>
           <td class="text-nowrap text-center">{{ mail['ip_port'].split(':')[0] }}:{{ mail['ip_port'].split(':')[1] }}</td>
           <td class="text-nowrap text-center">{{ mail['ip_port'].split(':')[2] }}</td>
-          <td class="text-left text-nowrap">{{ mail['data'][:30] }}</td>
+          <td class="text-left text-nowrap">{{ mail['data'][:100] }}</td>
           <td class="text-center">{{ mail['lens'] }}KB</td>
         </tr>
       {% endfor %}
@@ -59,17 +59,27 @@
            <div class="container-fluid">
             <div class="accordion"  id="accordion">
             <div class="mydata"></div>
-
+                <input type="hidden" class="dataid" value="123"/>
           </div>
         </div>
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-info" data-dismiss="modal" onclick="raw_data()">原始数据</button>
       </div>
     </div>
   </div>
 </div>
+
+
+<script>
+function raw_data() {
+    //更新模态框数据为原始数据，搞不定
+    dataid = $(".dataid")[0].value
+    window.location.href="/maildata?datatype=raw&id=" + dataid;
+}
+</script>
 
 <!--table点击事件-->
 <script>
@@ -83,6 +93,7 @@
         cache: false,//是否缓存
         success: function(a) {
             $(".mydata").html(a);
+            $(".dataid")[0].value = id;
         }
     });
     });
