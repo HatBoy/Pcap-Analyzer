@@ -1,2 +1,1 @@
-#coding:UTF-8
-__author__ = 'dj'
+# coding:UTF-8

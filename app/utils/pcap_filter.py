@@ -1,11 +1,10 @@
-#coding:UTF-8
-__author__ = 'dj'
-
+# coding:UTF-8
 import collections
-import tempfile
 import sys
+import tempfile
 
-#返回所有的数据包列表
+
+# 返回所有的数据包列表
 def get_all_pcap(PCAPS, PD):
     pcaps = collections.OrderedDict()
     count = 0
@@ -14,6 +13,7 @@ def get_all_pcap(PCAPS, PD):
         pcap = PD.ether_decode(p)
         pcaps[count] = pcap
     return pcaps
+
 
 def get_filter_pcap(PCAPS, PD, key, value):
     pcaps = collections.OrderedDict()
@@ -33,7 +33,8 @@ def get_filter_pcap(PCAPS, PD, key, value):
                 pcaps[count] = pcap
     return pcaps
 
-#协议过滤器
+
+# 协议过滤器
 def proto_filter(filter_type, value, PCAPS, PD):
     if filter_type == u'all':
         pcaps = get_all_pcap(PCAPS, PD)
@@ -65,7 +66,7 @@ def proto_filter(filter_type, value, PCAPS, PD):
 
 def showdata_from_id(PCAPS, dataid):
     pcap = PCAPS[dataid]
-    #输出重定向数据
+    # 输出重定向数据
     show_temp_name = tempfile.NamedTemporaryFile(prefix='show_', dir='/tmp')
     old = sys.stdout
     show_file = open(show_temp_name.name, 'w')
@@ -73,7 +74,7 @@ def showdata_from_id(PCAPS, dataid):
     pcap.show()
     sys.stdout = old
     show_file.close()
-    #读取数据
+    # 读取数据
     with open(show_temp_name.name, 'r') as showf:
         data = showf.read()
     result = data.strip().split('###')[1:]

@@ -1,0 +1,4 @@
+flask
+flask-wtf
+scapy-python3
+geoip2

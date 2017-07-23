@@ -1,14 +1,11 @@
-#coding:UTF-8
-__author__ = 'dj'
-
-from scapy.all import *
-import time
-import re
-import collections
+# coding:UTF-8
 import binascii
+from scapy.all import *
+
 from .data_extract import web_data, telnet_ftp_data
 
-#根据可疑端口判断是否有木马病毒
+
+# 根据可疑端口判断是否有木马病毒
 def port_warning(PCAPS, host_ip):
     with open('./app/utils/protocol/WARN', 'r', encoding='UTF-8') as f:
         warns = f.readlines()
@@ -16,7 +13,7 @@ def port_warning(PCAPS, host_ip):
     for warn in warns:
         warn = warn.strip()
         WARN_DICT[int(warn.split(':')[0])] = warn.split(':')[1]
-    #迭代数据包
+    # 迭代数据包
     portwarn_list = list()
     for pcap in PCAPS:
         if pcap.haslayer(TCP):
@@ -28,17 +25,25 @@ def port_warning(PCAPS, host_ip):
             if src == host_ip:
                 ip = dst
                 if sport in WARN_DICT:
-                    portwarn_list.append({'ip_port':ip+':'+str(sport), 'warn': WARN_DICT[sport],'time':time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(pcap.time)), 'data':pcap.summary()})
+                    portwarn_list.append({'ip_port': ip + ':' + str(sport), 'warn': WARN_DICT[sport],
+                                          'time': time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(pcap.time)),
+                                          'data': pcap.summary()})
                 elif dport in WARN_DICT:
-                    portwarn_list.append({'ip_port':ip+':'+str(dport), 'warn':WARN_DICT[dport],'time':time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(pcap.time)), 'data':pcap.summary()})
+                    portwarn_list.append({'ip_port': ip + ':' + str(dport), 'warn': WARN_DICT[dport],
+                                          'time': time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(pcap.time)),
+                                          'data': pcap.summary()})
                 else:
                     pass
             elif dst == host_ip:
                 ip = src
                 if sport in WARN_DICT:
-                    portwarn_list.append({'ip_port':ip+':'+str(sport), 'warn': WARN_DICT[sport],'time':time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(pcap.time)), 'data':pcap.summary()})
+                    portwarn_list.append({'ip_port': ip + ':' + str(sport), 'warn': WARN_DICT[sport],
+                                          'time': time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(pcap.time)),
+                                          'data': pcap.summary()})
                 elif dport in WARN_DICT:
-                    portwarn_list.append({'ip_port':ip+':'+str(dport), 'warn':WARN_DICT[dport],'time':time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(pcap.time)), 'data':pcap.summary()})
+                    portwarn_list.append({'ip_port': ip + ':' + str(dport), 'warn': WARN_DICT[dport],
+                                          'time': time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(pcap.time)),
+                                          'data': pcap.summary()})
                 else:
                     pass
             else:
@@ -46,7 +51,7 @@ def port_warning(PCAPS, host_ip):
     return portwarn_list
 
 
-#根据WEB内容来匹配常见WEB攻击,SQL注入，XSS，暴力破解，目录遍历，任意文件下载，木马
+# 根据WEB内容来匹配常见WEB攻击,SQL注入，XSS，暴力破解，目录遍历，任意文件下载，木马
 def web_warning(PCAPS, host_ip):
     with open('./app/utils/warning/HTTP_ATTACK', 'r', encoding='UTF-8') as f:
         attacks = f.readlines()
@@ -62,22 +67,25 @@ def web_warning(PCAPS, host_ip):
     tomcat_pattern = re.compile(r'Authorization: Basic(.*)')
     for web in webdata:
         data = web['data']
-        #HTTP爆破
+        # HTTP爆破
         username = web_patternu.findall(data)
         password = web_patternp.findall(data)
         tomcat = tomcat_pattern.findall(data)
         if username or password or tomcat:
             webbur_list.append(web['ip_port'].split(':')[0])
-        for pattn, attk in ATTACK_DICT.items(): #特征码和攻击名称
+        for pattn, attk in ATTACK_DICT.items():  # 特征码和攻击名称
             if pattn.upper() in data.upper():
-                webwarn_list.append({'ip_port': web['ip_port'].split(':')[0]+':'+web['ip_port'].split(':')[1], 'warn':attk, 'time':pattn, 'data':data})
+                webwarn_list.append(
+                    {'ip_port': web['ip_port'].split(':')[0] + ':' + web['ip_port'].split(':')[1], 'warn': attk,
+                     'time': pattn, 'data': data})
     ip_count = collections.Counter(webbur_list)
-    warn_ip = {k:y for k,y in ip_count.items() if y>10}
+    warn_ip = {k: y for k, y in ip_count.items() if y > 10}
     for ip, count in warn_ip.items():
-        webwarn_list.append({'ip_port': ip, 'warn':u'HTTP暴力破解', 'time': str(count), 'data':None})
+        webwarn_list.append({'ip_port': ip, 'warn': u'HTTP暴力破解', 'time': str(count), 'data': None})
     return webwarn_list
 
-#根据FTP登录失败次数，判断FTP暴力破解攻击,登录次数打大于10次算暴力破解
+
+# 根据FTP登录失败次数，判断FTP暴力破解攻击,登录次数打大于10次算暴力破解
 def ftp_warning(PCAPS, host_ip):
     ftpdata = telnet_ftp_data(PCAPS, host_ip, 21)
     ftpwarn_list = list()
@@ -86,27 +94,30 @@ def ftp_warning(PCAPS, host_ip):
         if '530 Not logged in' in ftp['data']:
             ftp503_list.append(ftp['ip_port'].split(':')[0])
     ip_count = collections.Counter(ftp503_list)
-    warn_ip = {k:y for k,y in ip_count.items() if y>10}
+    warn_ip = {k: y for k, y in ip_count.items() if y > 10}
     for ip, count in warn_ip.items():
-        ftpwarn_list.append({'ip_port': ip, 'warn':u'FTP暴力破解', 'time': str(count), 'data':None})
+        ftpwarn_list.append({'ip_port': ip, 'warn': u'FTP暴力破解', 'time': str(count), 'data': None})
     return ftpwarn_list
 
-#未完，抓取数据替换正则表达式
-#根据Telnet登录失败次数，判断FTP暴力破解攻击,登录次数打大于10次算暴力破解
+
+# 未完，抓取数据替换正则表达式
+# 根据Telnet登录失败次数，判断FTP暴力破解攻击,登录次数打大于10次算暴力破解
 def telnet_warning(PCAPS, host_ip):
     telnetdata = telnet_ftp_data(PCAPS, host_ip, 23)
     telnetwarn_list = list()
     telnetfail_list = list()
     for telnet in telnetdata:
-        if '4c6f67696e204661696c6564' in binascii.hexlify(telnet['data']) or '6c6f67696e206661696c6564' in binascii.hexlify(telnet['data']):
+        if '4c6f67696e204661696c6564' in binascii.hexlify(
+                telnet['data']) or '6c6f67696e206661696c6564' in binascii.hexlify(telnet['data']):
             telnetfail_list.append(telnet['ip_port'].split(':')[0])
     ip_count = collections.Counter(telnetfail_list)
-    warn_ip = {k:y for k,y in ip_count.items() if y>10}
+    warn_ip = {k: y for k, y in ip_count.items() if y > 10}
     for ip, count in warn_ip.items():
-        telnetwarn_list.append({'ip_port': ip, 'warn':u'Telnet暴力破解', 'time': str(count), 'data':None})
+        telnetwarn_list.append({'ip_port': ip, 'warn': u'Telnet暴力破解', 'time': str(count), 'data': None})
     return telnetwarn_list
 
-#同理得到ARP攻击警告
+
+# 同理得到ARP攻击警告
 def arp_warning(PCAPS):
     arpwarn_list = list()
     arp_list = list()
@@ -123,7 +134,8 @@ def arp_warning(PCAPS):
         if len(set(summary)) == 1:
             pass
         else:
-            arpwarn_list.append({'ip_port': src, 'warn': u'ARP欺骗', 'time': set([s.split()[-1] for s in summary]), 'data':None})
+            arpwarn_list.append(
+                {'ip_port': src, 'warn': u'ARP欺骗', 'time': set([s.split()[-1] for s in summary]), 'data': None})
     return arpwarn_list
 
 

@@ -1,15 +1,14 @@
-#coding:UTF-8
-__author__ = 'dj'
+# coding:UTF-8
+import base64
+import binascii
+from collections import OrderedDict
+
+from scapy.all import *
 
 from .data_extract import web_data, telnet_ftp_data, mail_data
-from scapy.all import *
-from collections import OrderedDict
-import base64
-import os
-import re
-import binascii
 
-#web文件
+
+# web文件
 def web_file(PCAPS, host_ip, folder):
     web_list = list()
     webdata = web_data(PCAPS, host_ip)
@@ -21,10 +20,13 @@ def web_file(PCAPS, host_ip, folder):
         type = ''
         for raw_data, data in zip(raw_data_list, data_list):
             if start:
-                file_name = type + '_' + web['ip_port'].split(':')[0] + '_' + web['ip_port'].split(':')[1] + '_' + filename
+                file_name = type + '_' + web['ip_port'].split(':')[0] + '_' + web['ip_port'].split(':')[
+                    1] + '_' + filename
                 with open(folder + file_name, 'wb') as f:
                     f.write(raw_data.strip())
-                web_list.append({'ip_port':web['ip_port'].split(':')[0]+':'+web['ip_port'].split(':')[1], 'filename':(folder+file_name), 'size':'%.2f'%(os.path.getsize(folder+file_name)/1024.0)})
+                web_list.append({'ip_port': web['ip_port'].split(':')[0] + ':' + web['ip_port'].split(':')[1],
+                                 'filename': (folder + file_name),
+                                 'size': '%.2f' % (os.path.getsize(folder + file_name) / 1024.0)})
                 start = False
                 switch = False
             if switch:
@@ -58,14 +60,14 @@ def web_file(PCAPS, host_ip, folder):
     return web_list
 
 
-#ftp文件
+# ftp文件
 def ftp_file(PCAPS, host_ip, folder):
     ftp_list = list()
     ftp_cmd_data = telnet_ftp_data(PCAPS, host_ip, 21)
     port_file_list = list()
     for ftp_cmd in ftp_cmd_data:
         cmd_data = ftp_cmd['data']
-        if "PASV" in cmd_data:  #PASV模式,通过Web浏览器访问模式
+        if "PASV" in cmd_data:  # PASV模式,通过Web浏览器访问模式
             pattern_pasv = re.compile(r'PASV(.*?)RETR(.*?)150', re.S)
             result = pattern_pasv.findall(cmd_data)
             if not result:
@@ -88,12 +90,15 @@ def ftp_file(PCAPS, host_ip, folder):
             ftpdata = telnet_ftp_data(PCAPS, host_ip, port)
             count = 0
             for ftp in ftpdata[start:]:
-                file_name = ftp['ip_port'].split(':')[0] + '_' + ftp['ip_port'].split(':')[1] + '_'+filename_list[count]
+                file_name = ftp['ip_port'].split(':')[0] + '_' + ftp['ip_port'].split(':')[1] + '_' + filename_list[
+                    count]
                 with open(folder + file_name, 'wb') as f:
                     f.write(ftp['raw_data'])
                 count += 1
-                ftp_list.append({'ip_port':ftp['ip_port'].split(':')[0] + ':' + ftp['ip_port'].split(':')[1], 'filename':folder+file_name, 'size':'%.2f'%(os.path.getsize(folder+file_name)/1024.0)})
-        elif 'PORT' in cmd_data:  #PORT模式,通过终端访问模式
+                ftp_list.append({'ip_port': ftp['ip_port'].split(':')[0] + ':' + ftp['ip_port'].split(':')[1],
+                                 'filename': folder + file_name,
+                                 'size': '%.2f' % (os.path.getsize(folder + file_name) / 1024.0)})
+        elif 'PORT' in cmd_data:  # PORT模式,通过终端访问模式
             pattern_port = re.compile(r'PORT(.*?)(RETR|STOR)(.*?)150', re.S)
             result = pattern_port.findall(cmd_data)
             for port, pattern, file in result:
@@ -103,22 +108,26 @@ def ftp_file(PCAPS, host_ip, folder):
                 port_file_list.append((port, file))
             for port, filename in port_file_list:
                 ftpdata = telnet_ftp_data(PCAPS, host_ip, port)[0]
-                file_name = ftpdata['ip_port'].split(':')[0] + '_' + ftpdata['ip_port'].split(':')[1] + '_'+filename
+                file_name = ftpdata['ip_port'].split(':')[0] + '_' + ftpdata['ip_port'].split(':')[1] + '_' + filename
                 with open(folder + file_name, 'wb') as f:
                     f.write(ftpdata['raw_data'])
-                ftp_list.append({'ip_port':ftpdata['ip_port'].split(':')[0] + ':' + ftpdata['ip_port'].split(':')[1], 'filename':folder+file_name, 'size':'%.2f'%(os.path.getsize(folder+file_name)/1024.0)})
+                ftp_list.append({'ip_port': ftpdata['ip_port'].split(':')[0] + ':' + ftpdata['ip_port'].split(':')[1],
+                                 'filename': folder + file_name,
+                                 'size': '%.2f' % (os.path.getsize(folder + file_name) / 1024.0)})
         else:
             pass
     return ftp_list
 
-#填充不符合规范的base64数据
+
+# 填充不符合规范的base64数据
 def base64padding(data):
     missing_padding = 4 - len(data) % 4
     if missing_padding:
-        data += '='* missing_padding
+        data += '=' * missing_padding
     return data
 
-#mail文件
+
+# mail文件
 def mail_file(PCAPS, host_ip, folder):
     filename_p = re.compile(r'filename="(.*?)"', re.S)
     charset = 'UTF-8'
@@ -139,7 +148,8 @@ def mail_file(PCAPS, host_ip, folder):
                     filedata = filedata.decode(charset)
                 except Exception as e:
                     pass
-                file_dict[mail['ip_port'].split(':')[0]+'_'+mail['ip_port'].split(':')[1]+'_'+filename] = filedata
+                file_dict[
+                    mail['ip_port'].split(':')[0] + '_' + mail['ip_port'].split(':')[1] + '_' + filename] = filedata
                 switch = False
             if 'filename' in data:
                 switch = True
@@ -163,12 +173,15 @@ def mail_file(PCAPS, host_ip, folder):
             elif isinstance(filedata, bytes):
                 mode = 'wb'
                 encoding = None
-            with open(folder+filename, mode, encoding=encoding) as f:
+            with open(folder + filename, mode, encoding=encoding) as f:
                 f.write(filedata)
-            mail_list.append({'ip_port':filename.split('_')[0]+':'+filename.split('_')[1], 'filename':folder+filename, 'size':'%.2f'%(os.path.getsize(folder+filename)/1024.0)})
+            mail_list.append(
+                {'ip_port': filename.split('_')[0] + ':' + filename.split('_')[1], 'filename': folder + filename,
+                 'size': '%.2f' % (os.path.getsize(folder + filename) / 1024.0)})
     return mail_list
 
-#所有二进制文件
+
+# 所有二进制文件
 def all_files(PCAPS, folder):
     file_header = dict()
     with open('./app/utils/protocol/FILES', 'r', encoding='UTF-8') as f:
@@ -193,7 +206,7 @@ def all_files(PCAPS, folder):
             for header, suffix in file_header.items():
                 if d.startswith(header.encode('UTF-8')):
                     filename = str(i) + suffix
-                    with open(folder+filename, 'wb') as f:
+                    with open(folder + filename, 'wb') as f:
                         f.write(binascii.unhexlify(d))
                     allfiles_dict[filename] = sess
                     i += 1

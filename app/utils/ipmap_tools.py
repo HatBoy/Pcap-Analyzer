@@ -1,12 +1,10 @@
-#coding:UTF-8
-__author__ = 'dj'
-
-from scapy.all import *
-import requests
-import os
+# coding:UTF-8
 import geoip2.database
+import requests
+from scapy.all import *
 
-#获取本机外网IP
+
+# 获取本机外网IP
 def getmyip():
     try:
         headers = {'User-Agent': 'Baiduspider+(+http://www.baidu.com/search/spider.htm'}
@@ -16,19 +14,20 @@ def getmyip():
         return None
 
 
-#获取经纬度
+# 获取经纬度
 def get_geo(ip):
-    reader = geoip2.database.Reader(os.getcwd()+'/app/utils/GeoIP/GeoLite2-City.mmdb')
+    reader = geoip2.database.Reader(os.getcwd() + '/app/utils/GeoIP/GeoLite2-City.mmdb')
     try:
         response = reader.city(ip)
-        city_name = response.country.names['zh-CN']+response.city.names['zh-CN']
+        city_name = response.country.names['zh-CN'] + response.city.names['zh-CN']
         longitude = response.location.longitude
         latitude = response.location.latitude
         return [city_name, longitude, latitude]
     except:
         return None
 
-#IP地图数据
+
+# IP地图数据
 def get_ipmap(PCAPS, host_ip):
     geo_dict = dict()
     ip_value_dict = dict()
@@ -50,8 +49,8 @@ def get_ipmap(PCAPS, host_ip):
         geo_list = get_geo(ip)
         if geo_list:
             geo_dict[geo_list[0]] = [geo_list[1], geo_list[2]]
-            Mvalue = str(float('%.2f'%(value/1024.0)))+':'+ip
-            ip_value_list.append({geo_list[0]:Mvalue})
+            Mvalue = str(float('%.2f' % (value / 1024.0))) + ':' + ip
+            ip_value_list.append({geo_list[0]: Mvalue})
         else:
             pass
     return [geo_dict, ip_value_list]
