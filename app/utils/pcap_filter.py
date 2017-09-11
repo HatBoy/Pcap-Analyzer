@@ -31,7 +31,7 @@ def get_filter_pcap(PCAPS, PD, key, value):
             else:
                 pass
         elif key == 'Source':
-            if value == pcap.get('Value').upper():
+            if value == pcap.get('Source').upper():
                 pcaps[count] = pcap
                 count += 1
         elif key == 'Destination':
