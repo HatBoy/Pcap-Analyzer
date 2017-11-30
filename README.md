@@ -1,6 +1,6 @@
 # Pcap-Analyzer
 
-## 更新说说明
+## 更说明
 + 将项目从Python2.X移植到Python3.X
 + 修复了多个Bug
 
