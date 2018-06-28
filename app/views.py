@@ -56,7 +56,7 @@ def upload():
                     flash('恭喜你,上传成功！')
                     return render_template('./upload/upload.html')
                 except Exception as e:
-                    flash('上传错误,错误信息:' + e.message)
+                    flash('上传错误,错误信息:' +str(e))
                     return render_template('./upload/upload.html')
             else:
                 flash('上传失败,请上传允许的数据包格式!')
