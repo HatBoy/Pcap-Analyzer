@@ -49,7 +49,7 @@ Python包管理器安装：sudo apt-get install python-setuptools python-pip
 
 ### 2.相关第三方依赖库安装：
 + sudo apt-get install tcpdump graphviz imagemagick python-gnuplot python-crypto python-pyx
-+ sudo pip3 install scapy-python3
++ sudo pip3 install scapy
 + sudo pip3 install Flask
 + sudo pip3 install Flask-WTF
 + sudo pip3 install geoip2
