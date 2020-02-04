@@ -1,0 +1,7 @@
+Flask==0.11.1
+Flask-WTF
+geoip2==2.4.0
+pyx==0.14.1
+requests==2.9.1
+scapy==2.4.0
+gunicorn
