@@ -5,4 +5,4 @@ Flask-WTF 0.12
 geoip2 2.4.0
 pyx 0.14.1
 requests 2.9.1
-scapy-python3
+scapy-python3 2.4.0
