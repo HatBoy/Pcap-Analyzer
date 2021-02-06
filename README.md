@@ -49,12 +49,12 @@ Python包管理器安装：sudo apt-get install python-setuptools python-pip
 
 ### 2.相关第三方依赖库安装：
 + sudo apt-get install tcpdump graphviz imagemagick python-gnuplot python-crypto python-pyx
-+ sudo pip3 install scapy
 + sudo pip3 install Flask
 + sudo pip3 install Flask-WTF
 + sudo pip3 install geoip2
 + sudo pip3 install pyx
 + sudo pip3 install requests
++ scapy的安装请参见官方文档，scapy的版本为2.4.0，2.4.0之后版本有较大的变化，可能导致不兼容
 
 ### 3.修改配置文件
 注意修改config.py配置文件中的目录位置
