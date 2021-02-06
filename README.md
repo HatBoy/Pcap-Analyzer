@@ -61,6 +61,7 @@ Python包管理器安装：sudo apt-get install python-setuptools python-pip
 + UPLOAD_FOLDER = '/home/dj/PCAP/'     上传的PCAP文件保存的位置
 + FILE_FOLDER = '/home/dj/Files/'      提取文件时保存的位置，下面必须要有All、FTP、Mail、Web子目录，用于存放提取不同协议的文件
 + PDF_FOLDER = '/home/dj/Files/PDF/'   PCAP保存为PDF时保存的位置
++ 警告：请将这些目录设置为空目录！否则会清空文件夹内容
 
 ### 4.服务器安装
 + Gunicorn服务器：pip3 install gunicorn
