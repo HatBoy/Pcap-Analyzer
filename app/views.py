@@ -54,7 +54,6 @@ def upload():
                 try:
                     pcap.save(os.path.join(filepath, PCAP_NAME))
                     PCAPS = rdpcap(os.path.join(filepath, PCAP_NAME))
-                    os.system('rm -rf ' + filepath + '*')
                     flash('恭喜你,上传成功！')
                     return render_template('./upload/upload.html')
                 except Exception as e:
